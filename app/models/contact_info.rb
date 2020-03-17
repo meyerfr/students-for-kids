@@ -1,3 +1,4 @@
 class ContractDatum < ApplicationRecord
-  has_one :sitter, :customer
+  has_one :sitter
+  has_one :customer
 end

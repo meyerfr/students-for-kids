@@ -4,6 +4,7 @@ class Sitter < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :contact_info
-  has_many :areas, :sitter_availabilities
+  has_many :areas
+  has_many :sitter_availabilities
   has_many :customers, through: :bookings
 end
