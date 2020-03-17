@@ -4,6 +4,7 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :contact_info
-  has_many :customer_availabilities, :kids
+  has_many :customer_availabilities
+  has_many :kids
   has_many :sitters, through: :bookings
 end
