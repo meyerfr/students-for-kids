@@ -17,6 +17,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/1/edit
   def edit
+    @customer.contact_infos.build
   end
 
   # POST /customers
@@ -53,6 +54,23 @@ class CustomersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def customer_params
-      params.require(:customer).permit(:contact_info_id)
+      params.require(:customer).permit(
+        :contact_info_id,
+        {photos: []},
+        contact_infos_attributes: [
+          :id,
+          :first_name,
+          :last_name,
+          :street,
+          :post_code,
+          :city,
+          :country,
+          :phone,
+          :bio,
+          :sign_in_count,
+          :last_sign_in,
+          :customers_id
+        ]
+      )
     end
 end

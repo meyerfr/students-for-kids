@@ -1,14 +1,68 @@
 
-<%= simple_form_for(@sitter) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<div class="show-container">
+  <%= simple_form_for(sitter) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
-    <%= f.input :age %>
-    <%= f.association :contract_data %>
-  </div>
+    <div class="form-inputs">
+      <div class="profile-photo-container">
+        <i class="fas fa-user"></i>
+        <%= f.input :photo, label: '<i class="fas fa-pencil-alt"></i>'.html_safe, input_html: {class: 'd-none picture-upload'}, label_html: {class: 'photo-label img-prev'} %>
+      </div>
+     <!--  <div class="photo">
+        <%#= f.label :photo, class: 'photo-label img-prev' do %>
+          <div class="pre-photo-container">
+            <i class="fas fa-pencil-alt"></i>
+            <%#= f.input :photo, wrapper_html: { class: 'd-none picture-upload' } %>
+            <i class="fas fa-user"></i>
+          </div>
+        <%# end %>
+      </div> -->
+      <%= f.simple_fields_for :contact_info do |ci| %>
+        <%= ci.input :first_name %>
+        <%= ci.input :last_name %>
+        <div class="form-group">
+          <%= ci.label :phone, class: 'info-label' do %>
+            <span>Phone</span>
+            <div class="info-on-hover">
+              <i class="fas fa-info"></i>
+              <div class="info">
+                <span>Wird nur deinen Kunden gezeigt.</span>
+              </div>
+            </div>
+          <% end %>
+          <%= ci.input_field :phone, label: false, class: 'form-control' %>
+        </div>
+        <%= ci.input :bio, as: :text %>
+        <div class="form-group">
+          <%= ci.label :street, class: 'info-label' do %>
+            <span>Street</span>
+            <div class="info-on-hover">
+              <i class="fas fa-info"></i>
+              <div class="info">
+                <span>Wird nur deinen Kunden gezeigt.</span>
+              </div>
+            </div>
+          <% end %>
+          <%= ci.input_field :street, label: false, class: 'form-control' %>
+        </div>
+        <%= ci.input :post_code %>
+        <%= ci.input :city, input_html: {value: 'Düsseldorf'} %>
+        <%= ci.input :country, input_html: {value: 'Germany'}, wrapper_html: {class: 'd-none'} %>
+      <% end %>
+      <%= f.input :age %>
+      <div class="availability-hands">
+      </div>
+      <%= image_prev %>
+      <%= f.simple_fields_for :sitter_availabilities do |sa| %>
+        <div class="sitter-availability-container">
+          <%= render 'sitter_availability', f: sa %>
+        </div>
+      <% end %>
+    </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+</div>

@@ -1,12 +1,24 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
-}
-
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
-
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.navbar-sfk {
+  justify-content: center;
+  background: $light-gray;
+  .navbar-collapse {
+    flex-grow: 0;
+    position: absolute;
+    right: 1rem;
+  }
+  .navbar-toggler{
+    position: absolute;
+    right: 1rem;
+  }
+  .navbar-brand {
+    position: absolute;
+    left: 1rem;
+    img {
+      width: 40px;
+    }
+  }
+  h1{
+    font-size: 34px;
+    margin: 0;
+  }
 }

@@ -1,4 +1,4 @@
-class ContractDatum < ApplicationRecord
-  has_one :sitter
-  has_one :customer
+class ContactInfo < ApplicationRecord
+  belongs_to :sitter, optional: true
+  belongs_to :customer, optional: true
 end

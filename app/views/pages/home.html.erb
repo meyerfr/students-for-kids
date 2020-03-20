@@ -1,3 +1,100 @@
-<div style="display: flex; justify-content: center; align-items: center">
-  <h1>Comming soon</h1>
+<div class="home-wrapper">
+  <div class="section top">
+    <div class="header">
+      <div class="quote">
+        <i class="fas fa-quote-left"></i>
+        <h1 class="top">
+          An Tagen wie diesen…
+        </h1>
+        <h1 class="top">
+          wünscht man sich Zusammenhalt!
+        </h1>
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <h1 class="header top">
+        Düsseldorf zeigt wie es geht.
+      </h1>
+    </div>
+    <div class="hands-container">
+      <div class="hand">
+        <%= image_tag 'hand-print-green.png' %>
+        <span class="green">Vertrautes Umfeld & Bekannte Kontakte</span>
+      </div>
+      <div class="hand">
+        <%= image_tag 'hand-print-red.png' %>
+        <span class="red">Ehrenamtliche Kinderbetreuung</span>
+      </div>
+      <div class="hand">
+        <%= image_tag 'hand-print-yellow.png' %>
+        <span class="yellow">Flexible & Zuverlässige Unterstützung</span>
+      </div>
+    </div>
+  </div>
+  <div class="section center">
+    <div class="text">
+      <div class="quote">
+        <i class="fas fa-quote-left"></i>
+        <h3 class="header">Komm’ dir entgegen, dich abzuholen</h3>
+        <i class="fas fa-quote-right"></i>
+      </div>
+      <span>Aufgrund der aktuellen Corona Lage in Deutschland haben letzte Woche alle Schulen, Kindergärten, Kitas und Kindertagesstätten geschlossen. Mit diesem Sozialen Projekt möchten wir ein Zeichen setzen und den Düsseldorfer Eltern unter die Arme greifen. Ärzte, Krankenschwestern, Pfleger und sonstige berufstätige Eltern sollen beruhigt zur Arbeit gehen können, mit dem Gewissen das ihre Kinder in den besten Händen sind. Mit Hilfe eines sozialen Projektes möchte die Düsseldorfer Jugend ein Zeichen gegen Corona und für den Zusammenhalt setzen.</span>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-part">
+      <div class="part set-width">
+        <div class="quote">
+          <i class="fas fa-quote-left"></i>
+          <h2 class="header">Wie ausgemacht, zur selben Uhrzeit</h2>
+          <i class="fas fa-quote-right"></i>
+        </div>
+        <span>Du möchtest Düsseldorf helfen und Familien in dieser Lage unterstützen? Super ! Werde Teil dieses Projekts und registriere dich bei uns. Mit deiner Unterstützung können wir Krankenschwestern, Ärzten und vielen anderen berufstätigen Eltern helfen.</span>
+        <% if current_user? %>
+          <%= link_to "Werde Babysitter", '#', class: "nav-link sfk-button" %>
+        <% else %>
+          <%= link_to "Werde Babysitter", new_sitter_registration_path, class: "nav-link sfk-button" %>
+        <% end %>
+      </div>
+      <div class="part">
+        <%= image_tag 'hand-print-green.png' %>
+        <%= image_tag 'hand-print-green.png' %>
+      </div>
+    </div>
+    <div class="section-part">
+      <div class="part reverse">
+        <%= image_tag 'hand-print-yellow.png' %>
+        <%= image_tag 'hand-print-yellow.png' %>
+      </div>
+      <div class="part set-width">
+        <div class="quote">
+          <i class="fas fa-quote-left"></i>
+          <h2 class="header">Am selben Treffpunkt, wie letztes mal</h2>
+          <i class="fas fa-quote-right"></i>
+        </div>
+        <span>
+          Du suchst eine zuverlässige und liebevolle Betreuung für deine Kinder in dieser Lage ? Verständlich ! Werde auch du Teil unseres Projektes und wir helfen dir einen geeigneten Babysitten in deinem Bezirk zu finden.
+        </span>
+        <% if current_user? %>
+          <%= link_to "Werde Kunde", '#', class: "nav-link stk-button" %>
+        <% else %>
+          <%= link_to "Werde Kunde", new_customer_registration_path, class: "nav-link stk-button" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h2 class="header">Wer sind wir?</h2>
+    <div class="section-part about-us">
+      <div class="about-me">
+        <%= image_tag 'help.png' %>
+        <span>Ich heiße Hannah Meyer bin 21 Jahre alt und studiere Sportmanangment in München. Ich selber Babysitte seit dem ich 13 Jahre alt bin und wurde überhäuft mit Anfragen in letzter Zeit. Ich möchte mit diesem Projekt einen Plattform schaffen in der die Jugend von Düsseldorf ihre Unterstützung anbieten kann.</span>
+      </div>
+      <div class="about-me">
+        <%= image_tag 'help.png' %>
+        <span>
+          Ich heiße Fritz Meyer, bin 20 Jahre alt und studiere Software Engineering in Berlin. Diese Website habe ich gebaut, um dieses Projekt zu unterstützen und zu zeigen das wir in der heutigen Zeit zusammen halten müssen.
+        </span>
+      </div>
+    </div>
+  </div>
 </div>

@@ -9,6 +9,8 @@ class CreateContactInfo < ActiveRecord::Migration[5.2]
       t.text :bio
       t.string :first_name
       t.string :last_name
+      t.references :customer, foreign_key: true
+      t.references :sitter, foreign_key: true
 
       t.timestamps
     end

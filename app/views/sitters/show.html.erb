@@ -1,13 +1,13 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Age:</strong>
   <%= @sitter.age %>
 </p>
 
 <p>
+  <%= cl_image_tag @sitter.photo.key %>
   <strong>Contract data:</strong>
-  <%= @sitter.contract_data %>
+  <%= @contact_info.first_name %>
+  <%= @contact_info.last_name %>
 </p>
 
 <%= link_to 'Edit', edit_sitter_path(@sitter) %> |

@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
-  devise_for :customers
-  devise_for :sitters
+  devise_for :customers, controllers: {
+    sessions: 'customers/sessions'
+  }
+  devise_for :sitters, controllers: {
+    sessions: 'sitters/sessions'
+  }
   devise_for :admins
   resources :admins
   resources :bookings
