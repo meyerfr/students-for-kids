@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   margin-top: 80px;
+  position: relative;
   .show-container{
     border: 1px solid #ced4da;
     border-radius: 5px;
@@ -12,11 +13,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 25px;
       textarea{
         height: 210px;
-      }
-      .sitter_contact_info_first_name{
-        margin-top: 25px;
       }
       .profile-photo-container{
         height: 100px;
@@ -105,18 +104,36 @@
         width: 70%;
       }
     }
-    .sitter_sitter_availabilities_start{
-      select:nth-child(-n+3) {
-        // display: none;
-      }
-    }
-    .sitter_sitter_availabilities_end{
-      select:nth-child(-n+3) {
-        // display: none;
-      }
-    }
     .form-actions{
       text-align: center;
+      margin-top: 30px;
+    }
+    .availabilities{
+      .availability-hands{
+        display: flex;
+        width: 100%;
+        img{
+          width: 100px;
+          object-fit: contain;
+          cursor: pointer;
+        }
+        .availability-hand-container{
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          align-items: center;
+        }
+      }
     }
   }
+}
+
+.year{
+  display: none;
+}
+.month{
+  display: none;
+}
+.day{
+  display: none;
 }

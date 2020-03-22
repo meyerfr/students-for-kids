@@ -17,4 +17,21 @@ module ApplicationHelper
       :destroy_sitter_session_path
     end
   end
+
+  def link_to_add_fields(name, f, association, **args)
+    # if f.object.send(association).select{|a| a.start.to_date == args[:day] if a.start.present?}.present?
+    #   new_object = f.object.send(association).select{|a| a.start.to_date == args[:day]}.first
+    # else
+      new_object = f.object.send(association).klass.new(start: "#{args[:day]} 10", end: "#{args[:day]} 18")
+    # end
+    id = new_object.object_id
+    fields = f.simple_fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize, f: builder)
+    end
+    link_to(name, '#', class: "add_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")})
+  end
+
+  def random_hand
+    ['hand-print-green.png', 'hand-print-red.png', 'hand-print-yellow.png'].sample
+  end
 end

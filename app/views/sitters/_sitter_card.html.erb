@@ -1,0 +1,17 @@
+<div class="sitter-card-wrapper">
+  <%= link_to sitter_path(sitter), class: 'sitter-card' do %>
+  <!-- <div class="sitter-card"> -->
+    <div class="sitter-card-img-part" style="background-image: linear-gradient(220deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.8) 90%), url(<%= cl_image_path(sitter.photo.key, :gravity=>'face:center', height: 130, width: 200, crop: :fill, effect: :sharpen) %>);">
+      <span class="sitter-age"><%= sitter.age %></span>
+      <div class="sitter-name">
+        <h3 class="sitter-name-light"><%= contact_info.first_name %></h3>
+        <h3><%= contact_info.last_name %></h3>
+      </div>
+    </div>
+    <div class="sitter-card-bio">
+      <!-- Should be Sitter availability that matches Customers request. -->
+      <span><%= contact_info.bio %></span>
+    </div>
+  <!-- </div> -->
+  <% end %>
+</div>

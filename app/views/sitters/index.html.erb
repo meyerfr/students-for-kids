@@ -1,26 +1,19 @@
-<h1>Sitters</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Age</th>
-      <th>Contract data</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @sitters.each do |sitter| %>
-      <tr>
-        <td><%= sitter.age %></td>
-        <!-- <td><%#= sitter.contract_data %></td> -->
-        <td><%= link_to 'Show', sitter %></td>
-        <td><%= link_to 'Edit', edit_sitter_path(sitter) %></td>
-        <td><%= link_to 'Destroy', sitter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="search-wrapper">
+  <div class="search-panel">
+    <div>
+      <p class="index-total-count">
+        <strong><%= @sitters.count %></strong> Babysitters
+      </p>
+      <div class="search-results">
+        <div class="index-wrapper">
+          <% @sitters.each do |sitter| %>
+            <%= render 'sitter_card', sitter: sitter, contact_info: sitter.contact_info %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <br>
 

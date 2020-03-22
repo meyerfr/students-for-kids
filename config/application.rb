@@ -15,6 +15,7 @@ module StudentsForKids
         end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
+    config.i18n.default_locale = :de
 
     config.time_zone = 'Berlin'
     config.active_record.default_timezone = :local # Or :utc

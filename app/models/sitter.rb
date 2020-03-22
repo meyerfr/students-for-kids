@@ -7,6 +7,7 @@ class Sitter < ApplicationRecord
   has_one :contact_info
   has_many :areas
   has_many :sitter_availabilities
+  has_many :bookings
   has_many :customers, through: :bookings
   accepts_nested_attributes_for :contact_info, allow_destroy: true, reject_if: proc { |att| att['first_name'].blank? }
   accepts_nested_attributes_for :sitter_availabilities, allow_destroy: true

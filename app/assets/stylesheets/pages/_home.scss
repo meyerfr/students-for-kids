@@ -34,6 +34,9 @@
           transform: rotate(45deg);
           align-self: flex-end;
         }
+        span{
+          margin-bottom: 20px;
+        }
       }
       .part.reverse{
         flex-direction: column-reverse;
