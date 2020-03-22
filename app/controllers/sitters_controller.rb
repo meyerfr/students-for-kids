@@ -19,17 +19,7 @@ class SittersController < ApplicationController
   # GET /sitters/1/edit
   def edit
     @sitter.build_contact_info unless @sitter.contact_info.present?
-    @dates = []
-    (Date.tomorrow..Date.today+6).to_a.each do |day|
-      # if @sitter.sitter_availabilities
-        unless day.sunday? #|| @sitter.sitter_availabilities.select{|sa| sa.start.to_date == day}.length.positive?
-          # @sitter.sitter_availabilities.build(start: "#{day} 10", end: "#{day} 18")
-          @dates << day
-        end
-      # else
-      #   @sitter.sitter_availabilities.build(start: "#{day} 10", end: "#{day} 18") unless day.today? || day.sunday?
-      # end
-    end
+    @sitter.sitter_availabilities.build(start: "#{Date.tomorrow} 10", end: "#{Date.tomorrow} 16") unless @sitter.sitter_availabilities.present?
   end
 
   # POST /sitters

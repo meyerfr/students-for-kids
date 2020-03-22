@@ -4,11 +4,11 @@
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-    <%= link_to '<i class="fas fa-long-arrow-alt-left"></i>'.html_safe, sitter_path(@sitter), class: 'back-button' %>
+    <%= link_to '<i class="fas fa-long-arrow-alt-left"></i>'.html_safe, sitter_path(sitter), class: 'back-button' %>
     <div class="form-inputs">
       <div class="profile-photo-container">
         <% if sitter.photo.attached? %>
-          <%= cl_image_tag @sitter.photo.key %>
+          <%= cl_image_tag sitter.photo.key %>
           <%= f.input :photo, label: '<i class="fas fa-pencil-alt"></i>'.html_safe, input_html: {class: 'd-none picture-upload'}, label_html: {class: 'photo-label img-prev'} %>
         <% else %>
           <i class="fas fa-user"></i>
@@ -30,7 +30,7 @@
           <% end %>
           <%= ci.input_field :phone, label: false, class: 'form-control' %>
         </div>
-        <%= ci.input :bio, as: :text %>
+        <%= ci.input :bio, as: :text, label: 'Erzähl ein bisschen von dir.' %>
         <div class="form-group">
           <%= ci.label :street, class: 'info-label' do %>
             <span>Straße</span>
@@ -50,7 +50,7 @@
       <%= f.input :age, label: 'Alter' %>
       <div class="form-group no-margin">
         <%= f.label :sitter_availabilities, class: 'info-label' do %>
-          <span>Wann hast du Zeit zum Babysitten?'</span>
+          <span>Wann hast du Zeit zum Babysitten?</span>
           <div class="info-on-hover">
             <i class="fas fa-info"></i>
             <div class="info">

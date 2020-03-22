@@ -2,7 +2,7 @@
 <div class="show-wrapper">
   <%= render '/shared/random_hand_background' %>
   <div class="show-container">
-    <% if current_user == @sitter || current_user.class = Admin || current_user.sitters.slect{|s| s.id == @sitter.id}.present? %>
+    <% if current_user == @sitter || current_admin || current_user.sitters.select{|s| s.id == @sitter.id}.present? %>
       <%= link_to '<i class="far fa-edit"></i>'.html_safe, edit_sitter_path(@sitter), class: 'edit-button' %>
     <% end %>
     <div class="form-inputs show">
@@ -14,12 +14,8 @@
         <% end %>
       </div>
       <div class="form-group">
-        <%= label_tag 'Vorname:' %>
-        <%= @contact_info.first_name %>
-      </div>
-      <div class="form-group">
-        <%= label_tag 'Nachname:' %>
-        <%= @contact_info.last_name %>
+        <%= label_tag 'Name:' %>
+        <%= @contact_info.full_name %>
       </div>
       <div class="form-group">
         <%= label_tag 'Alter:' %>
@@ -29,7 +25,7 @@
         <%= label_tag 'Bio:' %>
         <%= @contact_info.bio %>
       </div>
-      <% if current_user == @sitter || current_user.sitters.slect{|s| s.id == @sitter.id}.present? %>
+      <% if current_user == @sitter || current_admin || current_user.sitters.select{|s| s.id == @sitter.id}.present? %>
         <div class="form-group">
           <%= label_tag 'phone', class: 'info-label' do %>
             <span>Telefonnummer:</span>
@@ -43,10 +39,10 @@
           <%= @contact_info.phone %>
         </div>
       <% end %>
-      <% if current_user == @sitter %>
-        <div class="form-group">
-          <%= label_tag 'street', class: 'info-label' do %>
-            <span>Straße:</span>
+      <% if current_user == @sitter || current_admin %>
+        <div class="form-group address">
+          <%= label_tag 'address', class: 'info-label' do %>
+            <span>Adresse:</span>
             <div class="info-on-hover">
               <i class="fas fa-info"></i>
               <div class="info">
@@ -54,30 +50,8 @@
               </div>
             </div>
           <% end %>
-          <%= @contact_info.street %>
-        </div>
-        <div class="form-group">
-          <%= label_tag 'post_code', class: 'info-label' do %>
-            <span>Postleitzahl:</span>
-            <div class="info-on-hover">
-              <i class="fas fa-info"></i>
-              <div class="info">
-                <span>Wird nur dir gezeigt.</span>
-              </div>
-            </div>
-          <% end %>
+          <%= @contact_info.street %>,
           <%= @contact_info.post_code %>
-        </div>
-        <div class="form-group">
-          <%= label_tag 'city', class: 'info-label' do %>
-            <span>Stadt:</span>
-            <div class="info-on-hover">
-              <i class="fas fa-info"></i>
-              <div class="info">
-                <span>Wird nur dir gezeigt.</span>
-              </div>
-            </div>
-          <% end %>
           <%= @contact_info.city %>
         </div>
       <% end %>

@@ -8,6 +8,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/1
   def show
+    @contact_info = @customer.contact_info
   end
 
   # GET /customers/new
@@ -17,7 +18,9 @@ class CustomersController < ApplicationController
 
   # GET /customers/1/edit
   def edit
-    @customer.contact_infos.build
+    @customer.build_contact_info unless @customer.contact_info.present?
+    @customer.customer_availabilities.build unless @customer.customer_availabilities.present?
+    @customer.kids.build unless @customer.kids.present?
   end
 
   # POST /customers
@@ -56,8 +59,8 @@ class CustomersController < ApplicationController
     def customer_params
       params.require(:customer).permit(
         :contact_info_id,
-        {photos: []},
-        contact_infos_attributes: [
+        :photo,
+        contact_info_attributes: [
           :id,
           :first_name,
           :last_name,
@@ -70,6 +73,18 @@ class CustomersController < ApplicationController
           :sign_in_count,
           :last_sign_in,
           :customers_id
+        ],
+        kids_attributes: [
+          :id,
+          :_destroy,
+          :first_name,
+          :age
+        ],
+        customer_availabilities_attributes: [
+          :id,
+          :_destroy,
+          :start,
+          :end
         ]
       )
     end

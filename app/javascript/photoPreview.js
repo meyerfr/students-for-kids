@@ -10,14 +10,14 @@ const insertPictures = (event) => {
         reader.onload = function (e) {
           console.log(e)
           console.log(target)
-          if (target.parentElement.parentElement.querySelector('img')) {
-            target.parentElement.parentElement.querySelector('img').remove();
+          var profilePhotoContainer = target.parentElement.parentElement
+          if (profilePhotoContainer.querySelector('img')) {
+            profilePhotoContainer.querySelector('img').remove();
           }
-          target.parentElement.parentElement.insertAdjacentHTML('afterbegin', `<img src=${e.target.result} alt="Project Image" class="img-thumbnail"/>`);
-          // target.parentElement.previousElementSibling.classList.add('d-none');
-          // target.parentElement.parentElement.parentElement.style('background', 'transparent url('+e.target.result +') left top no-repeat');
-          // target.parentElement.parentElement.parentElement.style.backgroundImage = `url(${e.target.result})`;
-          // target.parentElement.parentElement.parentElement.classList.add('d-none');
+          if (profilePhotoContainer.querySelector('.fa-user')) {
+            profilePhotoContainer.querySelector('.fa-user').classList.add('d-none');
+          }
+          profilePhotoContainer.insertAdjacentHTML('afterbegin', `<img src=${e.target.result} alt="Project Image" class="img-thumbnail"/>`);
         };
         reader.readAsDataURL(file)
       })(files[i]);

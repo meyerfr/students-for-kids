@@ -1,13 +1,104 @@
+<%= render 'shared/random_hand_background' %>
+<div class="show-container">
+  <%= simple_form_for(customer) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<%= simple_form_for(@customer) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+    <%= link_to '<i class="fas fa-long-arrow-alt-left"></i>'.html_safe, customer_path(customer), class: 'back-button' %>
+    <div class="form-inputs">
+      <div class="profile-photo-container">
+        <% if customer.photo.attached? %>
+          <%= cl_image_tag customer.photo.key %>
+          <%= f.input :photo, label: '<i class="fas fa-pencil-alt"></i>'.html_safe, input_html: {class: 'd-none picture-upload'}, label_html: {class: 'photo-label img-prev'} %>
+        <% else %>
+          <i class="fas fa-user"></i>
+          <%= f.input :photo, label: '<i class="fas fa-pencil-alt"></i>'.html_safe, input_html: {class: 'd-none picture-upload'}, label_html: {class: 'photo-label img-prev'} %>
+        <% end %>
+      </div>
+      <%= f.simple_fields_for :contact_info do |ci| %>
+        <%= ci.input :first_name, label: 'Vorname' %>
+        <%= ci.input :last_name, label: 'Nachname' %>
+        <div class="form-group">
+          <%= ci.label :phone, class: 'info-label' do %>
+            <span>Telefonnummer</span>
+            <div class="info-on-hover">
+              <i class="fas fa-info"></i>
+              <div class="info">
+                <span>Wird nur deinen Babysittern gezeigt.</span>
+              </div>
+            </div>
+          <% end %>
+          <%= ci.input_field :phone, label: false, class: 'form-control' %>
+        </div>
+        <%= ci.input :bio, as: :text, label: 'Erzähl ein bisschen von deiner Familie' %>
+        <div class="form-group">
+          <%= ci.label :street, class: 'info-label' do %>
+            <span>Straße</span>
+            <div class="info-on-hover">
+              <i class="fas fa-info"></i>
+              <div class="info">
+                <span>Wird nur deinen Babysittern gezeigt.</span>
+              </div>
+            </div>
+          <% end %>
+          <%= ci.input_field :street, label: false, class: 'form-control' %>
+        </div>
+        <%= ci.input :post_code, label: 'Postleitzahl' %>
+        <%= ci.input :city, label: 'Stadt', input_html: {value: 'Düsseldorf'} %>
+        <%= ci.input :country, label: 'Land', input_html: {value: 'Germany'}, wrapper_html: {class: 'd-none'} %>
+      <% end %>
+      <div class="form-group no-margin">
+        <%= f.label :kids, class: 'info-label' do %>
+          <span>Wie viele Kinder hast du?</span>
+          <div class="info-on-hover">
+            <i class="fas fa-info"></i>
+            <div class="info">
+              <span>Klicke die Kinderhand.</span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="availabilities form-group">
+        <div class="availability-hands">
+          <div class="availability-hand-container">
+            <%= image_tag random_hand, class: 'availability-hand' %>
+          </div>
+          <%= link_to_add_fields('', f, :kids, class: 'add-availability-button btn sfk-button d-none') %>
+          <div class="availability-fields">
+            <%= f.simple_fields_for :kids do |k| %>
+                <%= render 'kid', f: k %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group no-margin">
+        <%= f.label :customer_availabilities, class: 'info-label' do %>
+          <span>Wann brauchst du einen Babysitter?</span>
+          <div class="info-on-hover">
+            <i class="fas fa-info"></i>
+            <div class="info">
+              <span>Klicke die Hand.</span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="availabilities form-group">
+        <div class="availability-hands">
+          <div class="availability-hand-container">
+            <%= image_tag random_hand, class: 'availability-hand' %>
+          </div>
+          <%= link_to_add_fields('', f, :customer_availabilities, class: 'add-availability-button btn sfk-button d-none') %>
+          <div class="availability-fields">
+            <%= f.simple_fields_for :customer_availabilities do |sa| %>
+                <%= render 'customer_availability', f: sa %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="form-inputs">
-    <%= f.association :contract_data %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= f.button :submit, 'Update Profile', class: 'sfk-button' %>
+    </div>
+  <% end %>
+</div>

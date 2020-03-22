@@ -1,7 +1,85 @@
-<p>
-  <strong>Contract data:</strong>
-  <%= @customer.contract_data %>
-</p>
-
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>
+<div class="show-wrapper">
+  <%= render 'shared/random_hand_background' %>
+  <div class="show-container">
+    <% if current_user == @customer || current_user.class == Admin || current_user.customers.select{|c| c.id == @customer.id}.present? %>
+      <%= link_to '<i class="far fa-edit"></i>'.html_safe, edit_customer_path(@customer), class: 'edit-button' %>
+    <% end %>
+    <div class="form-inputs show">
+      <div class="profile-photo-container">
+        <% if @customer.photo.attached? %>
+          <%= cl_image_tag(@customer.photo.key, width: 100, height: 100, gravity: 'face:center', crop: :fill, effect: :sharpen) %>
+        <% else %>
+          <i class="fas fa-user"></i>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= label_tag 'Name' %>
+        <%= @contact_info.full_name %>
+      </div>
+      <div class="form-group d-flex flex-column">
+        <%= label_tag 'Bio:' %>
+        <%= @contact_info.bio %>
+      </div>
+      <% if current_user == @customer || current_user.class == Admin || current_user.customers.select{|c| c.id == @customer.id}.present? %>
+        <div class="form-group">
+          <% if current_user == @customer %>
+            <%= label_tag 'phone', class: 'info-label' do %>
+              <span>Telefonnummer:</span>
+              <div class="info-on-hover">
+                <i class="fas fa-info"></i>
+                <div class="info">
+                  <span>Wird nur dir und deinen Babysitterm gezeigt.</span>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <%= label_tag 'Telefonnummer:' %>
+          <% end %>
+          <%= @contact_info.phone %>
+        </div>
+        <div class="form-group address">
+          <% if current_user == @customer %>
+            <%= label_tag 'address', class: 'info-label' do %>
+              <span>Adresse:</span>
+              <div class="info-on-hover">
+                <i class="fas fa-info"></i>
+                <div class="info">
+                  <span>Wird nur dir und deinen Babysittern gezeigt.</span>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <%= label_tag 'Adresse:' %><br>
+          <% end %>
+          <%= @contact_info.street %>,
+          <%= @contact_info.post_code %>
+          <%= @contact_info.city %>
+        </div>
+        <div class="form-group">
+          <% if current_user == @customer %>
+            <%= label_tag 'kids', class: 'info-label' do %>
+              <span>Deine Kinder:</span>
+              <div class="info-on-hover">
+                <i class="fas fa-info"></i>
+                <div class="info">
+                  <span>Wird nur dir und deinen Babysittern gezeigt.</span>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <%= label_tag 'Kinder:' %><br>
+          <% end %>
+          <% @customer.kids.each do |kid| %>
+            <span><%= kid.first_name %>, <%= kid.age %> Jahre alt</span><br>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="form-group">
+          <%= label_tag 'Kinder:' %>
+          <%= @customer.kids.count %>
+          <%= @customer.kids.count == 1 ? "Kind" : 'Kinder' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
