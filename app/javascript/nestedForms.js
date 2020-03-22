@@ -1,8 +1,11 @@
 const removeFields = (event) => {
   const parentDiv = event.currentTarget.closest('div');
   event.currentTarget.previousElementSibling.value = '1'; // hidden field _destroy
+  console.log(parentDiv);
   parentDiv.classList.add('d-none');
-  document.querySelector('.show-container').scrollIntoView({behavior: "smooth", block: "end"});
+  // parentDiv.parentElement.scrollIntoView({behavior: "smooth", block: "end"});
+  var y = parentDiv.parentElement.offsetTop + parentDiv.parentElement.offsetHeight + 40
+  window.scrollTo({top: y, behavior: 'smooth'});
   return event.preventDefault();
 }
 
@@ -13,14 +16,19 @@ const addFields = (event) => {
   const target = event.currentTarget;
   var insertIn = target.nextElementSibling; //field where the new form-field must be inserted
   insertIn.insertAdjacentHTML('beforeend', event.currentTarget.dataset.fields.replace(regexp, time)); //insert form-field
-  var insertedElement = insertIn.querySelectorAll('.availability-fields');
+  // var insertedElement = insertIn.querySelectorAll('.availability-fields')[insertIn.querySelectorAll('.availability-fields').length - 1];
 
   var allRemoveButtons = insertIn.querySelectorAll('.remove_record')
   var insertedRemoveButton = allRemoveButtons[allRemoveButtons.length - 1]; //inserted Remove_record Button
 
   if (insertedRemoveButton) insertedRemoveButton.addEventListener('click', removeFields);
 
-  document.querySelector('.show-container').scrollIntoView({behavior: "smooth", block: "end"});
+  var y = insertIn.offsetTop + insertIn.offsetHeight + 40;
+  console.log(y);
+  window.scrollTo({top: y, behavior: 'smooth'});
+
+  // insertIn.scrollIntoView({behavior: "smooth", block: "end"});
+  // window.scrollBy(0, 20);
 
   return event.preventDefault();
 }

@@ -30,8 +30,10 @@
           </div>
         </li>
       <% else %>
-        <li class="nav-item">
-          <%= link_to "Log in", new_admin_session_path, class: "nav-link" %>
+        <li class="login-links nav-item">
+          <span class="nav-link">Log in as:</span>
+          <%= link_to "Babysitter", new_sitter_session_path, class: 'nav-link' %>
+          <%= link_to "Kunde", new_customer_session_path, class: 'nav-link' %>
         </li>
       <% end %>
     </ul>
