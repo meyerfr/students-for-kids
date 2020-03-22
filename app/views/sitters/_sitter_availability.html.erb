@@ -2,6 +2,8 @@
   <%= f.input_field :id, as: :hidden %>
   <%= f.input_field :_destroy, as: :hidden %>
   <%= link_to '<i class="far fa-trash-alt"></i>'.html_safe, '#', class: 'remove_record' %>
-  <%= f.datetime_select :start, :order => [:day, :month, :year], datetime_separator: '', time_separator: ':' %>
-  <%= f.datetime_select :end, :order => [:day, :month, :year], datetime_separator: '', time_separator: ':', with_css_classes: true %>
+  <%#= f.datetime_select :start, {date_separator: "-"} %>
+  <div class="date inline"><%= f.datetime_select :start, {:order => [:day, :month, :year], datetime_separator: "</div><div class='time inline'>", time_separator: ':'}, {class: 'form-control'}%>
+    –
+    <%= f.datetime_select :end, {:order => [:day, :month, :year], datetime_separator: '', time_separator: ':', with_css_classes: true}, {class: 'form-control'} %></div>
 </div>

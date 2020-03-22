@@ -22,7 +22,7 @@ module ApplicationHelper
     # if f.object.send(association).select{|a| a.start.to_date == args[:day] if a.start.present?}.present?
     #   new_object = f.object.send(association).select{|a| a.start.to_date == args[:day]}.first
     # else
-      new_object = f.object.send(association).klass.new(start: "#{args[:day]} 10", end: "#{args[:day]} 18")
+      new_object = f.object.send(association).klass.new(start: "#{Date.tomorrow} 10", end: "#{Date.tomorrow} 18")
     # end
     id = new_object.object_id
     fields = f.simple_fields_for(association, new_object, child_index: id) do |builder|

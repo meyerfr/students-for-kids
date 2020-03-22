@@ -36,6 +36,9 @@ const addFields = (event) => {
   insertIn.insertAdjacentHTML('beforeend', event.currentTarget.dataset.fields.replace(regexp, time)); //insert form-field
   var insertedElement = insertIn.querySelectorAll('.availability-fields');
   // now addEventListeners to the new add_fields button and to the remove_record button
+  console.log(insertedElement);
+  // insertedElement[insertedElement.length - 1].querySelectorAll('select').slice(0, 2).wrapAll('<div class="date-wrapper">');
+
   var allRemoveButtons = insertIn.querySelectorAll('.remove_record')
   var insertedRemoveButton = allRemoveButtons[allRemoveButtons.length - 1]; //inserted Remove_record Button
   // var insertedAddButton = insertIn.lastElementChild.querySelector('.add_fields'); //inserted Add_fields button
