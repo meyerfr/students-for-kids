@@ -14,7 +14,7 @@ const insertPictures = (event) => {
             target.parentElement.parentElement.querySelector('img').remove();
           }
           target.parentElement.parentElement.insertAdjacentHTML('afterbegin', `<img src=${e.target.result} alt="Project Image" class="img-thumbnail"/>`);
-          target.parentElement.previousElementSibling.classList.add('d-none');
+          // target.parentElement.previousElementSibling.classList.add('d-none');
           // target.parentElement.parentElement.parentElement.style('background', 'transparent url('+e.target.result +') left top no-repeat');
           // target.parentElement.parentElement.parentElement.style.backgroundImage = `url(${e.target.result})`;
           // target.parentElement.parentElement.parentElement.classList.add('d-none');

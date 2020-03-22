@@ -19,21 +19,24 @@ class SittersController < ApplicationController
   # GET /sitters/1/edit
   def edit
     @sitter.build_contact_info unless @sitter.contact_info.present?
-    (Date.today..Date.today+7).to_a.each do |day|
-      if @sitter.sitter_availabilities
-        @sitter.sitter_availabilities.build(start: "#{day} 10", end: "#{day} 18") unless day.today? || day.sunday? || @sitter.sitter_availabilities.select{|sa| sa.start.to_date == day}.length.positive?
+    @dates = []
+    (Date.tomorrow..Date.today+6).to_a.each do |day|
+      # if @sitter.sitter_availabilities
+        unless day.sunday? #|| @sitter.sitter_availabilities.select{|sa| sa.start.to_date == day}.length.positive?
+          # @sitter.sitter_availabilities.build(start: "#{day} 10", end: "#{day} 18")
+          @dates << day
+        end
       # else
       #   @sitter.sitter_availabilities.build(start: "#{day} 10", end: "#{day} 18") unless day.today? || day.sunday?
-      end
+      # end
     end
   end
 
   # POST /sitters
   def create
     @sitter = Sitter.new(sitter_params)
-
     if @sitter.save
-      redirect_to @sitter, notice: 'Sitter was successfully created.'
+      redirect_to @sitter, notice: 'Babysitter erfolgreich erstellt.'
     else
       render :new
     end
@@ -42,7 +45,7 @@ class SittersController < ApplicationController
   # PATCH/PUT /sitters/1
   def update
     if @sitter.update(sitter_params)
-      redirect_to @sitter, notice: 'Sitter was successfully updated.'
+      redirect_to @sitter, notice: "Update erfolgreich."
     else
       render :edit
     end
@@ -51,7 +54,7 @@ class SittersController < ApplicationController
   # DELETE /sitters/1
   def destroy
     @sitter.destroy
-    redirect_to sitters_url, notice: 'Sitter was successfully destroyed.'
+    redirect_to sitters_url, notice: 'Babysitter erfolgreich gelöscht.'
   end
 
   private
@@ -81,6 +84,8 @@ class SittersController < ApplicationController
           :sitters_id
         ],
         sitter_availabilities_attributes: [
+          :id,
+          :_destroy,
           :start,
           :end
         ]
