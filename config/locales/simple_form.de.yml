@@ -1,0 +1,45 @@
+de:
+  simple_form:
+    "ja": 'Ja'
+    "nein": 'Nein'
+    required:
+      text: 'erforderlich'
+      mark: ''
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Bitte überprüfe die folgenden Probleme:"
+    # Examples
+    labels:
+      defaults:
+        password: 'Passwort'
+        first_name: 'Vorname'
+        last_name: 'Nachname'
+        age: 'Alter'
+        phone: 'Telefonnummer'
+        street: 'Straße'
+        post_code: 'Postleitzahl'
+        city: 'Stadt'
+        country: 'Land'
+        kids: 'Wie viele Kinder hast du?'
+      sitter:
+        sitter_availabilities: 'Wann hast du Zeit zum Babysitten?'
+        contact_info:
+          bio: 'Erzähl ein bisschen von dir'
+      customer:
+        customer_availabilities: 'Wann brauchst du einen Babysitter?'
+        contact_info:
+          bio: 'Erzähl ein bisschen von deiner Familie'
+        # email: 'Email'
+      # admin:
+    # hints:
+    #   defaults:
+    #     username: 'User name to sign in.'
+    #     password: 'No special characters, please.'
+    # include_blanks:
+    #   defaults:
+    #     age: 'Rather not say'
+    # prompts:
+    #   defaults:
+    #     age: 'Select your age'

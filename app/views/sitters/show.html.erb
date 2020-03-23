@@ -26,30 +26,28 @@
         <%= @contact_info.bio %>
       </div>
       <% if current_user == @sitter || current_admin || current_user.sitters.select{|s| s.id == @sitter.id}.present? %>
-        <div class="form-group">
-          <%= label_tag 'phone', class: 'info-label' do %>
-            <span>Telefonnummer:</span>
-            <div class="info-on-hover">
-              <i class="fas fa-info"></i>
-              <div class="info">
-                <span>Wird nur dir und deinen Kunden gezeigt.</span>
-              </div>
+        <div class="form-group info-label show">
+          <%= label_tag 'Telefonnummer' %>
+          <div class="info-on-hover">
+            <div class="info">
+              <span>Wird nur dir und deinen Kunden gezeigt.</span>
             </div>
-          <% end %>
+            <i class="fas fa-info"></i>
+          </div>
+          <br>
           <%= @contact_info.phone %>
         </div>
       <% end %>
       <% if current_user == @sitter || current_admin %>
-        <div class="form-group address">
-          <%= label_tag 'address', class: 'info-label' do %>
-            <span>Adresse:</span>
-            <div class="info-on-hover">
-              <i class="fas fa-info"></i>
-              <div class="info">
-                <span>Wird nur dir gezeigt.</span>
-              </div>
+        <div class="form-group address info-label show">
+          <%= label_tag 'Adresse' %>
+          <div class="info-on-hover">
+            <div class="info">
+              <span>Wird nur dir gezeigt.</span>
             </div>
-          <% end %>
+            <i class="fas fa-info"></i>
+          </div>
+          <br>
           <%= @contact_info.street %>,
           <%= @contact_info.post_code %>
           <%= @contact_info.city %>

@@ -37,6 +37,7 @@ class SittersController < ApplicationController
     if @sitter.update(sitter_params)
       redirect_to @sitter, notice: "Update erfolgreich."
     else
+      @sitter.build_contact_info(sitter_params[:contact_info_attributes]) unless @sitter.contact_info.present?
       render :edit
     end
   end

@@ -1,5 +1,19 @@
 de:
   activerecord:
+    models:
+      sitter: Babysitter
+      customer: Kunde
+    attributes:
+      sitter:
+        age: 'Alter'
+      contact_info:
+        first_name: 'Vorname'
+        last_name: 'Nachname'
+        phone: 'Telefonnummer'
+        street: 'Straße'
+        post_code: 'Postleitzahl'
+        city: 'Stadt'
+        country: 'Land'
     errors:
       messages:
         record_invalid: 'Gültigkeitsprüfung ist fehlgeschlagen: %{errors}'

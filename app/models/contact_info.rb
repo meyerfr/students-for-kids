@@ -1,9 +1,13 @@
 class ContactInfo < ApplicationRecord
-  validates :first_name, :last_name, :bio, presence: true
+  validates :first_name, :last_name, :bio, :phone, :street, :post_code, presence: true
   belongs_to :sitter, optional: true
   belongs_to :customer, optional: true
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def validate_con
+
   end
 end

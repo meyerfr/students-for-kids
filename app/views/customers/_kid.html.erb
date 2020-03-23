@@ -3,18 +3,15 @@
   <%= f.input_field :_destroy, as: :hidden %>
   <%= link_to '<i class="far fa-trash-alt"></i>'.html_safe, '#', class: 'remove_record' %>
   <div class="inline">
-    <div class="form-group customer_kids_first_name">
-      <%= f.label :first_name, class: 'info-label' do %>
-        <span>Vorname</span>
-        <div class="info-on-hover">
-          <i class="fas fa-info"></i>
-          <div class="info">
-            <span>Wird nur deinen Babysittern gezeigt.</span>
-          </div>
+    <%= f.input :first_name, wrapper_html: {class: 'info-label'} do %>
+      <div class="info-on-hover">
+        <div class="info">
+          <span>Wird nur deinen Babysittern gezeigt.</span>
         </div>
-      <% end %>
-      <%= f.input_field :first_name, label: false, class: 'form-control' %>
-    </div>
+        <i class="fas fa-info"></i>
+      </div>
+      <%= f.input_field :first_name, class: 'form-control' %>
+    <% end %>
     <%= f.input :age, label: 'Alter', collection: 1..14, selected: 6 %>
   </div>
 </div>
