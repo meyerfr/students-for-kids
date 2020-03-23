@@ -19,7 +19,7 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer.build_contact_info unless @customer.contact_info.present?
-    @customer.customer_availabilities.build unless @customer.customer_availabilities.present?
+    @customer.customer_availabilities.build(start: "#{Date.tomorrow} 10", end: "#{Date.tomorrow} 16") unless @customer.customer_availabilities.present?
     @customer.kids.build unless @customer.kids.present?
   end
 
@@ -39,6 +39,7 @@ class CustomersController < ApplicationController
     if @customer.update(customer_params)
       redirect_to @customer, notice: 'Customer was successfully updated.'
     else
+      @customer.build_contact_info(customer_params[:contact_info_attributes]) unless @customer.contact_info.present?
       render :edit
     end
   end

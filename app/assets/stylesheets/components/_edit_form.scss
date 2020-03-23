@@ -119,6 +119,7 @@
         .availability-hand-container{
           display: flex;
           align-items: flex-end;
+          min-width: 120px;
           img{
             width: 100px;
             object-fit: contain;
@@ -136,6 +137,7 @@
         .inline{
           display: flex;
           align-items: baseline;
+          width: 100%;
           .customer_kids_first_name{
             width: -webkit-fill-available;
             .info-on-hover{
@@ -148,6 +150,28 @@
           .customer_kids_age{
             width: 12%;
           }
+        }
+        .availability-fields{
+          display: flex;
+          flex-direction: row-reverse;
+          margin-bottom: 20px;
+          .d-flex.flex-row.align-items-center{
+            flex-direction: column !important;
+            width: 100%;
+          }
+        }
+        .kid-fields{
+          display: flex;
+          flex-direction: row-reverse;
+        }
+        .remove_record{
+          display: flex;
+          align-items: center;
+          width: 10%;
+          font-size: 20px;
+          color: black;
+          justify-content: center;
+          margin: 22px 0 16px 0;
         }
       }
     }

@@ -7,15 +7,16 @@ module ApplicationHelper
     current_admin || current_customer || current_sitter
   end
 
-  def correct_sign_out_path
+  def current_user_show_path
     case current_user.class
     when Admin
-      :destroy_admin_session_path
+      path = admin_path(current_user)
     when Customer
-      :destroy_customer_session_path
-    when
-      :destroy_sitter_session_path
+      path = customer_path(current_user)
+    when Sitter
+      path = sitter_path(current_user)
     end
+    return path
   end
 
   def link_to_add_fields(name, f, association, **args)

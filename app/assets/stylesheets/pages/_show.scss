@@ -8,4 +8,21 @@
       margin: 0;
     }
   }
+  .availability{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid lightgray;
+    .sfk-button{
+      padding-top: 2px;
+    }
+  }
+  .availability:last-child{
+    border-bottom: none;
+    padding-bottom: none;
+  }
+  .availability:first-child{
+    padding-top: none;
+  }
 }

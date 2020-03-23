@@ -9,6 +9,7 @@ class SittersController < ApplicationController
   # GET /sitters/1
   def show
     @contact_info = @sitter.contact_info
+    @availabilities = @sitter.sitter_availabilities
   end
 
   # GET /sitters/new

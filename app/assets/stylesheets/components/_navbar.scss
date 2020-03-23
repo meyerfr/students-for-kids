@@ -5,6 +5,11 @@
     flex-grow: 0;
     position: absolute;
     right: 1rem;
+    .dropdown{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   .navbar-toggler{
     position: absolute;
@@ -24,5 +29,8 @@
   .login-links{
     display: flex;
     align-items: baseline;
+  }
+  .dropdown-toggle::after{
+    content: none;
   }
 }

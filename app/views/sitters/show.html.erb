@@ -53,6 +53,17 @@
           <%= @contact_info.city %>
         </div>
       <% end %>
+      <div class="form-group">
+        <%= label_tag :sitter_availabilities, "Verfügbarkeiten:" %>
+        <% @availabilities.each do |availability| %>
+          <div class="availability">
+            <span><%= l(availability.start, format: :short) %> - <%= l(availability.end, format: :only_time) %></span>
+            <% unless current_user == @sitter %>
+              <%= link_to 'Book', '#', class: 'sfk-button' %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

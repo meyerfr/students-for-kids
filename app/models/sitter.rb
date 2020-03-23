@@ -14,11 +14,4 @@ class Sitter < ApplicationRecord
   validates_associated :contact_info
   accepts_nested_attributes_for :sitter_availabilities, allow_destroy: true
   validates_associated :sitter_availabilities
-
-  # def validate_contact_info(attributes)
-  #   errors.add(:first_name, 'Vorname muss angegeben werden.') if attributes[:first_name].blank?
-  #   errors.add(:last_name, 'Nachname muss angegeben werden.') if attributes[:last_name].blank?
-  #   errors.add(:phone, 'Telefonnummer muss angegeben werden.') if attributes[:phone].blank?
-  #   errors.add(:bio, 'Bio muss angegeben werden.') if attributes[:bio].blank?
-  # end
 end
