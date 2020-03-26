@@ -1,5 +1,18 @@
-<div class="bookings-wrapper">
-  <% @bookings.each do |booking| %>
-    <%= render 'booking', booking: booking %>
-  <% end %>
-</div>
+<% if @bookings.empty? %>
+  <div class="no-instances-info">
+    <i class="fas fa-info"></i>
+    <span>
+      <% if current_sitter %>
+        Es sieht so aus als hast du noch keine Buchungen. Wir werden dir eine Mail schicken sobald jemand deine Hilfe benötigt.
+      <% else %>
+        Es sieht so aus als hättest du noch keinen Babysitter gefunden. Klicke oben auf 'Babysitter finden' um den perfekten Babysitter für <% current_customer.kids.each_with_index{|kid, idx| idx > 0 ? "und #{kid.first_name}" : kid.first_name }%> zu finden.
+      <% end %>
+    </span>
+  </div>
+<% else %>
+  <div class="bookings-wrapper">
+    <% @bookings.each do |booking| %>
+      <%= render 'booking', booking: booking %>
+    <% end %>
+  </div>
+<% end %>

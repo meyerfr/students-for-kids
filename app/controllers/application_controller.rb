@@ -37,4 +37,15 @@ class ApplicationController < ActionController::Base
       ]
     )
   end
+
+  def only_customers!
+    unless current_admin || current_customer
+      flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])
+      redirect_to bookings_path
+    end
+  end
+
+  def authenticate_user!
+    redirect_to root_path unless admin_signed_in? || sitter_signed_in? || customer_signed_in?
+  end
 end

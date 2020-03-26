@@ -13,6 +13,11 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <% if current_user? %>
+        <% if current_customer %>
+          <li class="nav-item active">
+            <%= link_to "Babysitter finden", sitters_path, class: "nav-link" %>
+          </li>
+        <% end %>
         <li class="nav-item dropdown">
           <% if current_admin || !current_user.photo.attached? %>
             <i class="fas fa-user avatar dropdown-toggle avatar-bordered" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>

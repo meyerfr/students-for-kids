@@ -171,13 +171,6 @@ class SittersController < ApplicationController
       end
     end
 
-    def only_customers!
-      unless current_admin || current_customer
-        flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])
-        redirect_to bookings_path
-      end
-    end
-
     def only_customers_or_correct_sitter!
       unless current_admin || current_customer || current_sitter == @sitter
         flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])

@@ -1,16 +1,25 @@
-<div class="search-wrapper">
-  <div class="search-panel">
-    <div>
-      <p class="index-total-count">
-        <strong><%= @sitters.count %></strong> Babysitters
-      </p>
-      <div class="search-results">
-        <div class="index-wrapper">
-          <% @sitters.each do |sitter| %>
-            <%= render 'sitter_card', sitter: sitter, matching_availabilities: @matching_availabilities , contact_info: sitter.contact_info %>
-          <% end %>
+<% if @sitters.empty? %>
+  <div class="no-instances-info">
+    <i class="fas fa-info"></i>
+    <span>
+      Es sieht so aus als ob es im Moment leider keinen Babysitter gibt der an deinen angegebenen Terminen kann. Bitte versuche es später nochmal. Deine Zeiten kannst du übrigens jederzeit auf deinem Profil überarbeiten.
+    </span>
+  </div>
+<% else %>
+  <div class="search-wrapper">
+    <div class="search-panel">
+      <div>
+        <p class="index-total-count">
+          <strong><%= @sitters.count %></strong> Babysitters
+        </p>
+        <div class="search-results">
+          <div class="index-wrapper">
+            <% @sitters.each do |sitter| %>
+              <%= render 'sitter_card', sitter: sitter, matching_availabilities: @matching_availabilities , contact_info: sitter.contact_info %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>

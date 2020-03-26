@@ -1,4 +1,11 @@
 // Specific CSS for your home-page
+.no-instances-info{
+  padding: 20px;
+  background: wheat;
+  text-align: center;
+  i{margin-right: 20px;}
+}
+
 .home-wrapper{
   display: flex;
   flex-direction: column;
