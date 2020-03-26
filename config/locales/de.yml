@@ -14,6 +14,7 @@ de:
   photo: 'Foto'
   sitter_availabilities: 'Verfügbarkeiten:'
   customer_availabilities: 'Babsitter gesucht am:'
+  sitter_districts: 'Verfügbar in:'
   district_name: 'Stadtteil'
   update_profile_info: Bitte vervollständige zuerst dein Profil.
     # models:

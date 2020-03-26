@@ -60,9 +60,16 @@
           <%= @contact_info.post_code %>
           <%= @contact_info.city %>
         </div>
+        <div class="form-group info-label show">
+          <%= label_tag t(:sitter_districts) %>
+          <br>
+          <% @sitter.districts.each do |district| %>
+            <%= district.name %>,
+          <% end %>
+        </div>
       <% end %>
-      <div class="form-group">
-        <% if @availabilities.present? %>
+      <% if @availabilities.present? %>
+        <div class="form-group">
           <%= label_tag t(:sitter_availabilities) %>
           <% @availabilities.each do |ca_id, sitter_availabilities| %>
             <% sitter_availabilities.each do |sa| %>
@@ -72,15 +79,17 @@
               </div>
             <% end %>
           <% end %>
-        <% elsif @sitter_availabilities.present? %>
+        </div>
+      <% elsif @sitter_availabilities.present? %>
+        <div class="form-group">
           <%= label_tag t(:sitter_availabilities) %>
           <% @sitter_availabilities.each do |sa| %>
             <div class="availability">
               <span><%= l(sa.starts_at, format: :short) %> - <%= l(sa.ends_at, format: :only_time) %></span>
             </div>
           <% end %>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

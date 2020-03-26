@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2020_03_25_082153) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gist"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -91,6 +92,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_082153) do
     t.boolean "booked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "customer_id, tsrange(starts_at, ends_at)", name: "no_overlapping_customer_availabilities", using: :gist
     t.index ["customer_id"], name: "index_customer_availabilities_on_customer_id"
   end
 
@@ -145,6 +147,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_082153) do
     t.boolean "booked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "sitter_id, tsrange(starts_at, ends_at)", name: "no_overlapping_sitter_availabilities", using: :gist
     t.index ["sitter_id"], name: "index_sitter_availabilities_on_sitter_id"
   end
 
