@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_18_011001) do
+ActiveRecord::Schema.define(version: 2020_03_25_082153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,23 +47,20 @@ ActiveRecord::Schema.define(version: 2020_03_18_011001) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
-  end
-
-  create_table "areas", force: :cascade do |t|
-    t.bigint "sitter_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["sitter_id"], name: "index_areas_on_sitter_id"
   end
 
   create_table "bookings", force: :cascade do |t|
     t.bigint "customer_id"
     t.bigint "sitter_id"
-    t.datetime "start"
-    t.datetime "end"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_bookings_on_customer_id"
@@ -89,16 +86,15 @@ ActiveRecord::Schema.define(version: 2020_03_18_011001) do
 
   create_table "customer_availabilities", force: :cascade do |t|
     t.bigint "customer_id"
-    t.datetime "start"
-    t.datetime "end"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean "booked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_customer_availabilities_on_customer_id"
   end
 
   create_table "customers", force: :cascade do |t|
-    t.integer "sign_in_count", default: 0
-    t.datetime "last_sign_in"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -106,8 +102,31 @@ ActiveRecord::Schema.define(version: 2020_03_18_011001) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.bigint "district_id"
+    t.index ["district_id"], name: "index_customers_on_district_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
+  end
+
+  create_table "district_possibilities", force: :cascade do |t|
+    t.bigint "district_id"
+    t.bigint "sitter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_district_possibilities_on_district_id"
+    t.index ["sitter_id"], name: "index_district_possibilities_on_sitter_id"
+  end
+
+  create_table "districts", force: :cascade do |t|
+    t.integer "post_code"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "kids", force: :cascade do |t|
@@ -121,8 +140,9 @@ ActiveRecord::Schema.define(version: 2020_03_18_011001) do
 
   create_table "sitter_availabilities", force: :cascade do |t|
     t.bigint "sitter_id"
-    t.datetime "start"
-    t.datetime "end"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean "booked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sitter_id"], name: "index_sitter_availabilities_on_sitter_id"
@@ -130,8 +150,6 @@ ActiveRecord::Schema.define(version: 2020_03_18_011001) do
 
   create_table "sitters", force: :cascade do |t|
     t.integer "age"
-    t.integer "sign_in_count", default: 0
-    t.datetime "last_sign_in"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -139,17 +157,24 @@ ActiveRecord::Schema.define(version: 2020_03_18_011001) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_sitters_on_email", unique: true
     t.index ["reset_password_token"], name: "index_sitters_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "areas", "sitters"
   add_foreign_key "bookings", "customers"
   add_foreign_key "bookings", "sitters"
   add_foreign_key "contact_infos", "customers"
   add_foreign_key "contact_infos", "sitters"
   add_foreign_key "customer_availabilities", "customers"
+  add_foreign_key "customers", "districts"
+  add_foreign_key "district_possibilities", "districts"
+  add_foreign_key "district_possibilities", "sitters"
   add_foreign_key "kids", "customers"
   add_foreign_key "sitter_availabilities", "sitters"
 end

@@ -1,5 +1,6 @@
 class ContactInfo < ApplicationRecord
-  validates :first_name, :last_name, :bio, :phone, :street, :post_code, presence: true
+  validates :first_name, :last_name, presence: true, on: :create
+  validates :bio, :phone, :street, :post_code, presence: true, on: :update
   belongs_to :sitter, optional: true
   belongs_to :customer, optional: true
 

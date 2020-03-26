@@ -2,13 +2,16 @@
   <%= render 'shared/random_hand_background' %>
   <div class="show-container devise">
     <h2>Sign up</h2>
-    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= simple_form_for([:resource_name, resource.with_contact_info], url: registration_path(resource_name)) do |f| %>
       <%= f.error_notification %>
 
       <div class="form-inputs">
+        <%= f.simple_fields_for :contact_info do |fa| %>
+          <%= fa.input :first_name, autofocus: true %>
+          <%= fa.input :last_name %>
+        <% end %>
         <%= f.input :email,
                     required: true,
-                    autofocus: true,
                     input_html: { autocomplete: "email" }%>
         <%= f.input :password,
                     required: true,

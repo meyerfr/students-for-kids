@@ -1,5 +1,13 @@
 <%= render 'shared/random_hand_background' %>
 <div class="show-container">
+  <% if current_user == @customer || current_user.class == Admin || current_user.customers.select{|c| c.id == @customer.id}.present? %>
+    <%= link_to customer_path(@customer), method: :delete, data: { confirm: 'Bist du dir sicher?'}, class: 'edit-button edit-info-on-hover' do %>
+      <i class="far fa-trash-alt"></i>
+      <span class="info">
+        Profil Löschen
+      </span>
+    <% end %>
+  <% end %>
   <%= simple_form_for(customer) do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -16,8 +24,8 @@
         <% end %>
       </div>
       <%= f.simple_fields_for :contact_info do |ci| %>
-        <%= ci.input :first_name %>
-        <%= ci.input :last_name %>
+        <%= ci.input :first_name, autofocus: true, placeholder: 'Max' %>
+        <%= ci.input :last_name, placeholder: 'Mustermann' %>
         <%= ci.input :phone, wrapper_html: {class: 'info-label'} do %>
           <div class="info-on-hover">
             <div class="info">
@@ -25,9 +33,9 @@
             </div>
             <i class="fas fa-info"></i>
           </div>
-          <%= ci.input_field :phone, class: 'form-control' %>
+          <%= ci.input_field :phone, placeholder: '0172-1234567', class: 'form-control' %>
         <% end %>
-        <%= ci.input :bio, as: :text %>
+        <%= ci.input :bio, as: :text, placeholder: 'Mein Name ist Andrea Schmidt, ich habe 3 Kinder und arbeite als Apothekerin in Oberkassel. Für die nächsten Wochen würde ich mich sehr über eure Unterstützung freuen! Ich suche einen lustigen und verantwortungsbewussten Babysitter für meine Kinder…' %>
         <%= ci.input :street, wrapper_html: {class: 'info-label'} do %>
           <div class="info-on-hover">
             <div class="info">
@@ -35,9 +43,17 @@
             </div>
             <i class="fas fa-info"></i>
           </div>
-          <%= ci.input_field :street, class: 'form-control' %>
+          <%= ci.input_field :street, placeholder: 'Königsallee 20', class: 'form-control' %>
         <% end %>
-        <%= ci.input :post_code %>
+        <%= ci.input :post_code, placeholder: '40212' %>
+        <%= f.simple_fields_for :district do |df| %>
+          <%= df.input :name, label: t(:district_name) do %>
+            <div id= "search-data" class="form-search search-data" data-data="<%= @districts_json %>">
+              <%= df.input_field :name, autocomplete: :off, class: "form-control search-input" %>
+            </div>
+          <% end %>
+          <%#= df.input :name, label: t(:district_name) %>
+        <% end %>
         <%= ci.input :city, input_html: {value: 'Düsseldorf'} %>
         <%= ci.input :country, input_html: {value: 'Germany'}, wrapper_html: {class: 'd-none'} %>
       <% end %>

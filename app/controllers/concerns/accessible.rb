@@ -15,12 +15,12 @@ module Accessible
       flash.clear
       flash[:notice] = 'Du bist bereits als Babysitter angemeldet'
       # The authenticated root path can be defined in your routes.rb in: devise_scope :user do...
-      redirect_to(root_path) and return
+      redirect_to(sitter_path(current_sitter)) and return
     elsif current_customer
       flash.clear
       flash[:notice] = 'Du bist bereits als Kunde angemeldet'
       # The authenticated root path can be defined in your routes.rb in: devise_scope :user do...
-      redirect_to(root_path) and return
+      redirect_to(bookings_path) and return
     end
   end
 end

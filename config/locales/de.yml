@@ -1,8 +1,43 @@
 de:
+  name: 'Name:'
+  age: 'Alter:'
+  first_name: 'Vorname:'
+  last_name: 'Nachname:'
+  phone: 'Telefonnummer:'
+  street: 'Straße:'
+  post_code: 'Postleitzahl:'
+  city: 'Stadt'
+  country: 'Land:'
+  bio: 'Bio:'
+  address: 'Adresse:'
+  kids: 'Kinder:'
+  photo: 'Foto'
+  sitter_availabilities: 'Verfügbarkeiten:'
+  customer_availabilities: 'Babsitter gesucht am:'
+  district_name: 'Stadtteil'
+  update_profile_info: Bitte vervollständige zuerst dein Profil.
+    # models:
+    #   sitter: Babysitter
+    #   customer:
+    #     one: Kunde
+    #     other: Kunden
+  actions:
+    edit: bearbeiten
+    update: aktualisieren
+    destroy: löschen
   activerecord:
     models:
       sitter: Babysitter
-      customer: Kunde
+      customer:
+        one: Kunde
+        other: Kunden
+      kid:
+        one: Kind
+        other: Kinder
+    flashes:
+      no_access: "Du hast keine Berechtigung diesen %{model} zu %{action}!"
+      index:
+        no_access: 'Du hast keine Berechtigung alle %{model} zu sehen!'
     attributes:
       sitter:
         age: 'Alter'
@@ -154,7 +189,9 @@ de:
       wrong_length:
         one: "%{attribute} hat die falsche Länge (muss genau 1 Zeichen haben)"
         other: "%{attribute} hat die falsche Länge (muss genau %{count} Zeichen haben)"
-      time_range: "Muss mindestens %{count} Stunden lang sein."
+      time_range: "Muss mindestens %{count} Stunden lang sein"
+      times_overlapping: Überschneidet mit einer deiner anderen Verfügbarkeiten
+      time_is_in_the_past: "Darf nicht in der Vergangenheit sein"
     template:
       body: 'Bitte überprüfen Sie die folgenden Felder:'
       header:
@@ -235,4 +272,5 @@ de:
       long: "%A, %d. %B %Y, %H:%M Uhr"
       short: "%d. %B, %H:%M Uhr"
       only_time: "%H:%M Uhr"
+      only_date: "%d. %B"
     pm: nachmittags

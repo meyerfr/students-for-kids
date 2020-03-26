@@ -1,0 +1,36 @@
+<p>Hallo <%= @contact_info.first_name %>,</p>
+<p><strong>WIR HELFEN DIR UND DEINER FAMILIE GERNE!!!</strong></p>
+
+<p>Schön, dass Du Teil unseres Kundenstammes geworden bist und wir Deiner Familie helfen dürfen. An diesem sozialen Projekt arbeiten täglich junge Menschen aus Düsseldorf ehrenamtlich daran, die derzeitige Situation für berufstätige Eltern erträglicher zu machen.</p>
+
+<p>Auf unserer Website, hast Du jederzeit die Möglichkeit zwischen mehreren Babysittern den passenden für Deine Familie zu finden.</p>
+
+<p>In der derzeitigen Corona-Krise, hat es natürlich Priorität unser Team und unsere Kunden bestmöglich zu schützen und über die Hygiene Vorschriften aufzuklären. Sowohl ihr, als Familie, als auch die Babysitter werden dieses Informationsschreiben erhalten und sich an die Hygienevorschriften des Bundesgesundheitsministeriums halten.</p>
+
+<span>Sollte der Fall eintreffen, dass eines Deiner Kinder eins der folgenden Symptome verspürt bitten wir Dich uns dies umgehend zu melden und das Treffen abzusagen.
+Zu den ersten Symptomen beim COVID-19 zählen:</span>
+<ul style="margin: 5px 0 10px 0">
+  <li>Fieber</li>
+  <li>Husten</li>
+  <li>Abgeschlagenheit</li>
+  <li>Atemprobleme wie Kurzatmigkeit</li>
+</ul>
+<%= image_tag attachments['hygiene-info.jpeg'].url, style: 'width: 40%' %>
+
+<p>
+  <span>Weitere Hygienetipps und Informationen und zum COVID-19 findet ihr unter dem folgenden Link des Bundesgesundheitsministeriums.</span>
+  <%= link_to 'https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/C/Coronavirus/Merkblatt-Bildungseinrichtungen-Coronavirus_DE.pdf', 'https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/C/Coronavirus/Merkblatt-Bildungseinrichtungen-Coronavirus_DE.pdf' %>
+</p>
+<p>Bei jeglichen Fragen oder Problemen deinerseits, kannst Du uns immer erreichen unter: <%= mail_to 'hannah.meyer@students-for-kids.de' %>.</p>
+
+<div style='display: flex; flex-direction: column;'>
+  <span>BLEIB GESUND :)</span>
+  <span>Mit freundlichen Grüßen</span>
+</div>
+
+<p>Dein Stundents for Kids Team</p>
+
+<div style="display: flex; width: 165px; flex-direction: column;">
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: scaleX(-1) rotate(20deg);' %>
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: rotate(20deg); align-self: flex-end' %>
+</div>

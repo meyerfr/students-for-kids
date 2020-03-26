@@ -1,0 +1,36 @@
+<p>Hallo <%= @contact_info.first_name %>,</p>
+<p><strong>SCHÖN, DASS DU TEIL UNSERES TEAMS BIST!!!</strong></p>
+
+<p>Wir freuen uns in den kommenden Wochen mit dir gemeinsam gegen die Corona-Krise anzukämpfen und berufstätige Eltern zu unterstützen! Du bist nun offiziell Teil unseres Teams und wirst per Email über deine erste Buchung informiert.</p>
+
+<p>Priorität ist es natürlich unser Team und unsere Kunden in dieser Zeit zu schützen und über die Hygiene Vorschriften aufzuklären. Sowohl du, als Babysitter, als auch die Familien werden dieses Informationsschreiben erhalten und sich an die Hygienevorschriften des Bundesgesundheitsministeriums halten.</p>
+
+<span>Sollte der Fall eintreffen, dass ihr eins der folgenden Symptome verspürt bitten wir euch uns dies umgehend zu melden und Zuhause zu bleiben.
+Zu den ersten Symptomen beim COVID-19 zählen:</span>
+<ul style="margin: 5px 0 10px 0">
+  <li>Fieber</li>
+  <li>Husten</li>
+  <li>Abgeschlagenheit</li>
+  <li>Atemprobleme wie Kurzatmigkeit</li>
+</ul>
+<%= image_tag attachments['hygiene-info.jpeg'].url, style: 'width: 40%' %>
+
+<p>
+  <span>Weitere Hygienetipps und Informationen und zum COVID-19 findet ihr unter dem folgenden Link des Bundesgesundheitsministeriums.</span>
+  <%= link_to 'https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/C/Coronavirus/Merkblatt-Bildungseinrichtungen-Coronavirus_DE.pdf', 'https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/3_Downloads/C/Coronavirus/Merkblatt-Bildungseinrichtungen-Coronavirus_DE.pdf' %>
+</p>
+<p><%= @contact_info.first_name %>, wir freuen uns dich im Team zu haben und melden und sobald wir die perfekten Babysitter Kinder in deinem Umkreis gefunden haben.</p>
+
+<p>Bei jeglichen Fragen oder Problemen deinerseits, kannst du uns immer erreichen unter: <%= mail_to 'hannah.meyer@students-for-kids.de' %>.</p>
+
+<div style='display: flex; flex-direction: column;'>
+  <span>Bis dahin</span>
+  <span>BLEIB GESUND :)</span>
+</div>
+
+<p>Dein Stundents for Kids Team</p>
+
+<div style="display: flex; width: 165px; flex-direction: column;">
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: scaleX(-1) rotate(20deg);' %>
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: rotate(20deg); align-self: flex-end' %>
+</div>

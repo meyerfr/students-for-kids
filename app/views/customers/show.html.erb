@@ -1,8 +1,13 @@
 <div class="show-wrapper">
   <%= render 'shared/random_hand_background' %>
   <div class="show-container">
-    <% if current_user == @customer || current_user.class == Admin || current_user.customers.select{|c| c.id == @customer.id}.present? %>
-      <%= link_to '<i class="far fa-edit"></i>'.html_safe, edit_customer_path(@customer), class: 'edit-button' %>
+    <% if current_user == @customer || current_user.class == Admin %>
+      <%= link_to edit_customer_path(@customer), class: 'edit-button edit-info-on-hover' do %>
+        <i class="far fa-edit"></i>
+        <span class="info">
+          Profil bearbeiten
+        </span>
+      <% end %>
     <% end %>
     <div class="form-inputs show">
       <div class="profile-photo-container">
@@ -13,7 +18,7 @@
         <% end %>
       </div>
       <div class="form-group">
-        <%= label_tag 'Name' %>
+        <%= label_tag t(:name) %>
         <%= @contact_info.full_name %>
       </div>
       <div class="form-group d-flex flex-column">
@@ -21,53 +26,49 @@
         <%= @contact_info.bio %>
       </div>
       <% if current_user == @customer || current_user.class == Admin || current_user.customers.select{|c| c.id == @customer.id}.present? %>
-        <div class="form-group">
+        <div class="form-group info-label show">
           <% if current_user == @customer %>
-            <%= label_tag 'phone', class: 'info-label' do %>
-              <span>Telefonnummer:</span>
-              <div class="info-on-hover">
-                <i class="fas fa-info"></i>
-                <div class="info">
-                  <span>Wird nur dir und deinen Babysitterm gezeigt.</span>
-                </div>
+            <%= label_tag t(:phone) %>
+            <div class="info-on-hover">
+              <div class="info">
+                <span>Wird nur dir und deinen Babysitterm gezeigt.</span>
               </div>
-            <% end %>
+              <i class="fas fa-info"></i>
+            </div>
           <% else %>
-            <%= label_tag 'Telefonnummer:' %>
+            <%= label_tag t(:phone) %>
           <% end %>
+          <br>
           <%= @contact_info.phone %>
         </div>
-        <div class="form-group address">
+        <div class="form-group address info-label show">
           <% if current_user == @customer %>
-            <%= label_tag 'address', class: 'info-label' do %>
-              <span>Adresse:</span>
-              <div class="info-on-hover">
-                <i class="fas fa-info"></i>
-                <div class="info">
-                  <span>Wird nur dir und deinen Babysittern gezeigt.</span>
-                </div>
+            <%= label_tag t(:address) %>
+            <div class="info-on-hover">
+              <div class="info">
+                <span>Wird nur dir und deinen Babysittern gezeigt.</span>
               </div>
-            <% end %>
+              <i class="fas fa-info"></i>
+            </div>
           <% else %>
-            <%= label_tag 'Adresse:' %><br>
+            <%= label_tag t(:address) %>
           <% end %>
+          <br>
           <%= @contact_info.street %>,
           <%= @contact_info.post_code %>
           <%= @contact_info.city %>
         </div>
-        <div class="form-group">
+        <div class="form-group info-label show">
           <% if current_user == @customer %>
-            <%= label_tag 'kids', class: 'info-label' do %>
-              <span>Deine Kinder:</span>
-              <div class="info-on-hover">
-                <i class="fas fa-info"></i>
-                <div class="info">
-                  <span>Wird nur dir und deinen Babysittern gezeigt.</span>
-                </div>
+            <%= label_tag t(:kids) %>
+            <div class="info-on-hover">
+              <div class="info">
+                <span>Wird nur dir und deinen Babysittern gezeigt.</span>
               </div>
-            <% end %>
+              <i class="fas fa-info"></i>
+            </div>
           <% else %>
-            <%= label_tag 'Kinder:' %><br>
+            <%= label_tag t(:kids) %><br>
           <% end %>
           <% @customer.kids.each do |kid| %>
             <span><%= kid.first_name %>, <%= kid.age %> Jahre alt</span><br>
@@ -75,7 +76,7 @@
         </div>
       <% else %>
         <div class="form-group">
-          <%= label_tag 'Kinder:' %>
+          <%= label_tag t(:kids) %>
           <%= @customer.kids.count %>
           <%= @customer.kids.count == 1 ? "Kind" : 'Kinder' %>
         </div>

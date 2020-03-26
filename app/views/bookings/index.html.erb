@@ -1,31 +1,5 @@
-<h1>Bookings</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Customer</th>
-      <th>Sitter</th>
-      <th>Start</th>
-      <th>End</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bookings.each do |booking| %>
-      <tr>
-        <td><%= booking.customer %></td>
-        <td><%= booking.sitter %></td>
-        <td><%= booking.start %></td>
-        <td><%= booking.end %></td>
-        <td><%= link_to 'Show', booking %></td>
-        <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
-        <td><%= link_to 'Destroy', booking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Booking', new_booking_path %>
+<div class="bookings-wrapper">
+  <% @bookings.each do |booking| %>
+    <%= render 'booking', booking: booking %>
+  <% end %>
+</div>

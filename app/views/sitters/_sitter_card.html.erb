@@ -1,17 +1,35 @@
-<div class="sitter-card-wrapper">
-  <%= link_to sitter_path(sitter), class: 'sitter-card' do %>
-  <!-- <div class="sitter-card"> -->
-    <div class="sitter-card-img-part" style="background-image: linear-gradient(220deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.8) 90%), url(<%= cl_image_path(sitter.photo.key, :gravity=>'face:center', height: 130, width: 200, crop: :fill, effect: :sharpen) %>);">
+<div class="sitter-card-wrapper sitter-card">
+  <%= link_to sitter_path(sitter), class: 'sitter-card-link' do %>
+    <div class="sitter-card-img-part" style="background-image: linear-gradient(220deg, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.5) 85%), url(<%= cl_image_path(sitter.photo.key, :gravity=>'face:center', height: 130, width: 200, crop: :fill, effect: :sharpen) %>);">
       <span class="sitter-age"><%= sitter.age %></span>
       <div class="sitter-name">
         <h3 class="sitter-name-light"><%= contact_info.first_name %></h3>
         <h3><%= contact_info.last_name %></h3>
       </div>
     </div>
-    <div class="sitter-card-bio">
-      <!-- Should be Sitter availability that matches Customers request. -->
-      <span><%= contact_info.bio %></span>
+    <div class="sitter-card-availabilities">
+      <% if current_customer %>
+        <span class="underline"><%= contact_info.first_name %> kann dir helfen am:</span>
+        <% matching_availabilities.each do |ca_id, s_id_sa_ids| %>
+          <% s_id_sa_ids.each do |s_id, sa_id| %>
+            <% if s_id == sitter.id %>
+              <div class="sitter-card-availability">
+                <% customer_availability = CustomerAvailability.find(ca_id) %>
+                <span><%= l(customer_availability.starts_at, format: :only_date) %></span>
+                <span><%= l(customer_availability.start_at, format: :only_time) %> - <%= l(customer_availability.starts_at, format: :only_time) %></span>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% elsif current_admin %>
+        <span class="underline"><%= contact_info.first_name %> kann helfen am:</span>
+        <% sitter.sitter_availabilities.each do |sa| %>
+          <div class="sitter-card-availability">
+            <span><%= l(sa.starts_at, format: :only_date) %></span>
+            <span><%= l(sa.starts_at, format: :only_time) %> - <%= l(sa.starts_at, format: :only_time) %></span>
+          </div>
+        <% end %>
+      <% end %>
     </div>
-  <!-- </div> -->
   <% end %>
 </div>

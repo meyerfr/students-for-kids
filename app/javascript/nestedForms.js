@@ -1,7 +1,9 @@
+import { updateEndDate } from 'handleAvailabilityDates';
+
 const removeFields = (event) => {
   const parentDiv = event.currentTarget.closest('div');
   event.currentTarget.previousElementSibling.value = '1'; // hidden field _destroy
-  console.log(parentDiv);
+  // console.log(parentDiv);
   parentDiv.classList.add('d-none');
   // parentDiv.parentElement.scrollIntoView({behavior: "smooth", block: "end"});
   var y = parentDiv.parentElement.offsetTop + parentDiv.parentElement.offsetHeight + 40
@@ -17,14 +19,37 @@ const addFields = (event) => {
   var insertIn = target.nextElementSibling; //field where the new form-field must be inserted
   insertIn.insertAdjacentHTML('beforeend', event.currentTarget.dataset.fields.replace(regexp, time)); //insert form-field
   // var insertedElement = insertIn.querySelectorAll('.availability-fields')[insertIn.querySelectorAll('.availability-fields').length - 1];
-
+  // console.log(insertIn);
   var allRemoveButtons = insertIn.querySelectorAll('.remove_record')
   var insertedRemoveButton = allRemoveButtons[allRemoveButtons.length - 1]; //inserted Remove_record Button
 
   if (insertedRemoveButton) insertedRemoveButton.addEventListener('click', removeFields);
 
+  // handle dates
+  var allAvailabilityFields = insertIn.querySelectorAll('.availability-fields');
+  // console.log(allAvailabilityFields)
+  if (allAvailabilityFields.length > 0) {
+    var insertedElement = allAvailabilityFields[allAvailabilityFields.length - 1];
+    if (insertedElement) {
+      console.log(insertedElement);
+      var startDateContainer = insertedElement.querySelector('.date');
+      var day = startDateContainer.children[0].value;
+      var month = startDateContainer.children[1].value;
+      var year = startDateContainer.children[2].value;
+
+      var endDateContainer = insertedElement.querySelector('.time');
+      var allEndDateInputs = endDateContainer.querySelectorAll('input');
+      allEndDateInputs[0].value = day;
+      allEndDateInputs[1].value = month;
+      allEndDateInputs[2].value = year;
+
+      startDateContainer.querySelectorAll('select').forEach((select)=>{
+        select.addEventListener('change', updateEndDate)
+      });
+    }
+  }
+
   var y = insertIn.offsetTop + insertIn.offsetHeight + 40;
-  console.log(y);
   window.scrollTo({top: y, behavior: 'smooth'});
 
   // insertIn.scrollIntoView({behavior: "smooth", block: "end"});
@@ -43,6 +68,25 @@ function addOrRemoveFields() {
     alreadyPresentRemoveFieldButtons.forEach((removeFieldButton) => {
       removeFieldButton.addEventListener('click', removeFields)
     })
+  };
+
+  // handleAvailabilityDates
+  const dateFields = document.querySelectorAll('.date');
+  if (dateFields.length > 0) {
+    dateFields.forEach((date) => {
+      date.querySelectorAll('select').forEach((select)=>{
+        var startDateContainer = select.parentElement;
+        // console.log(startDateContainer)
+        var day = startDateContainer.children[0].value;
+        var month = startDateContainer.children[1].value;
+        var year = startDateContainer.children[2].value;
+        var allEndDateInputs = select.parentElement.nextElementSibling.querySelectorAll('input');
+        allEndDateInputs[0].value = day;
+        allEndDateInputs[1].value = month;
+        allEndDateInputs[2].value = year;
+        select.addEventListener('change', updateEndDate)
+      });
+    });
   };
 }
 

@@ -1,0 +1,20 @@
+<div class="booking-wrapper">
+  <div class="booking-container">
+    <div class="photo-match">
+      <%= link_to customer_path(booking.customer) do %>
+        <%= cl_image_tag(booking.customer.photo.key, width: 100, height: 100, gravity: 'face:center', crop: :fill, effect: :sharpen) %>
+      <% end %>
+      <div class="photo-connection">
+        <div class="line"></div>
+      </div>
+      <%= link_to sitter_path(booking.sitter) do %>
+        <%= cl_image_tag(booking.sitter.photo.key, width: 100, height: 100, gravity: 'face:center', crop: :fill, effect: :sharpen) %>
+      <% end %>
+    </div>
+    <div class="line padding"></div>
+    <div class="booking-infos">
+      <%= l(booking.starts_at, format: :only_date) %><br>
+      <%= l(booking.starts_at, format: :only_time) %> - <%= l(booking.ends_at, format: :only_time) %>
+    </div>
+  </div>
+</div>

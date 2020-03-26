@@ -1,0 +1,30 @@
+<p>Hallo <%= @contact_info_sitter.first_name %></p>
+<p><strong>WIR HABEN EINEN PASSENDEN KUNDEN FÜR DICH GEFUNDEN & FREUEN UNS, DASS DU DEINE HILFE ANBIETEST!</strong></p>
+<p>Bitte sei am <strong><%= l(@booking.starts_at, format: :only_date) %> pünktlich um <%= l(@booking.starts_at, format: :only_time) %> in der <%= @contact_info_customer.street %>, <%= @customer.district.name %></strong>.</p>
+<p>Deine Babysitter Familie heisst <%= @contact_info_customer.last_name %> und hat <%= @customer.kids.count %> <%= @customer.kids.count > 1 ? 'Kinder' : 'Kind' %>.
+</p>
+<ul>
+<% @customer.kids.each do |kid| %>
+  <li><%= kid.first_name %> (<%= kid.age %>)</li>
+<% end %>
+</ul>
+<p>Du kannst ab jetzt mit Familie <%= @contact_info_customer.last_name %> in Kontakt treten unter der Nummer <%= @contact_info_customer.phone %>.</p>
+
+<p>Wir bitten Dich, die Hygienevorschriften des Robert Kochs Institutes einzuhalten und pünktlich, gut gelaunt und zuverlässig bei deiner Babysitter Familie zu erscheinen.</p>
+
+<p>Bei jeglichen Fragen oder Problemen deinerseits, kannst du uns immer erreichen unter:
+<%= mail_to 'hannah.meyer@students-for-kids.de' %>.</p>
+
+<p>Bitte erkläre deiner Babysitter Familie, dass sie für weitere Babysitter Buchungen einfach auf unserer Website <%= link_to 'students-for-kids.de', 'http://www.students-for-kids.de' %> vorbeischauen kann und dich oder weitere Babysitter fürs nächste mal buchen kann.</p>
+
+<p>Wir wünschen Dir viel Spaß und danken dir für Deine Unterstützung und Deinen Einsatz!</p>
+<div style='display: flex; flex-direction: column;'>
+  <span>BLEIB GESUND :)</span>
+  <span>Ganz liebe Grüße</span>
+</div>
+<p>Dein Stundents for Kids Team</p>
+<div style="display: flex; width: 165px; flex-direction: column;">
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: scaleX(-1) rotate(20deg);' %>
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: rotate(20deg); align-self: flex-end' %>
+</div>
+

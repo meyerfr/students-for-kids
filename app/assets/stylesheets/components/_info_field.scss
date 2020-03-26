@@ -46,3 +46,15 @@
   top: 1px;
   right: 1px;
 }
+
+.edit-info-on-hover .info{
+  position: absolute;
+  top: -20px;
+  right: -76px;
+}
+
+.edit-info-on-hover:hover{
+  .info{
+    display: block;
+  }
+}

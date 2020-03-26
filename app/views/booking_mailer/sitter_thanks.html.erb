@@ -1,0 +1,15 @@
+<p>Hallo <%= @contact_info_sitter.first_name %></p>
+<p><strong>VIELEN LIEBEN DANK FÜR DEINEN EINSATZ BEI FAMILIE <%= @contact_info_customer.last_name.upcase %>!</strong></p>
+<p>Du hast dazu beigetragen, berufstätigen Eltern unter die Arme zu greifen und zu zeigen, dass Düsseldorf zusammenhält.</p>
+<h3><strong>Danke!</strong></h3>
+<p>Solltest Du irgendwelche Anmerkungen bezüglich Deiner Babysitter Familie machen wollen, kannst Du dich jederzeit unter <%= mail_to 'hannah.meyer@students-for-kids.de' %> melden.</p>
+<p>Jederzeit kannst Du dich unter <%= link_to 'students-for-kids.de/bookings', 'http://www.students-for-kids.de/bookings' %> auf dem laufenden halten. Bitte aktualisiere deine Verfügbarkeiten für den nächsten Babysitter Einsatz bei Bedarf.</p>
+<div style='display: flex; flex-direction: column;'>
+  <span>BLEIB GESUND :)</span>
+  <span>Ganz liebe Grüße</span>
+</div>
+<p>Dein Stundents for Kids Team</p>
+<div style="display: flex; width: 165px; flex-direction: column;">
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: scaleX(-1) rotate(20deg);' %>
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: rotate(20deg); align-self: flex-end' %>
+</div>
