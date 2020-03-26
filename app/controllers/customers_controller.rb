@@ -40,13 +40,14 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1
   def update
-    if @customer.update(customer_params.except(:district_attributes))
+    if @customer.update(customer_params.except(:customer_availabilities_attributes, :district_attributes)) && update_or_create_customer_availabilities
       district = District.find_by(name: customer_params[:district_attributes][:name])
       @customer.update(district_id: district.id)
       redirect_to @customer, notice: 'Customer was successfully updated.'
     else
       @customer.build_contact_info(customer_params[:contact_info_attributes]) unless @customer.contact_info.present?
       @districts_json = District.pluck(:name).to_json
+      @customer.build_district(customer_params[:district_attributes]) unless @customer.district.present?
       render :edit
     end
   end
@@ -58,6 +59,20 @@ class CustomersController < ApplicationController
   end
 
   private
+
+    def update_or_create_customer_availabilities
+      customer_availabilities = customer_params[:customer_availabilities_attributes].values
+      customer_availabilities.each do |availability_hash|
+        if availability_hash[:_destroy] == '1'
+          if availability_hash[:id].present?
+            CustomerAvailability.find(availability_hash[:id]).delete
+          end
+        else
+          availability = @customer.customer_availabilities.where(id: availability_hash[:id]).first_or_initialize(availability_hash.except(:_destroy))
+          return false unless availability.save
+        end
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def customer_all_attributes_present
       Customer.select{ |c| c.contact_info.present? && c.contact_info.attributes.except('customer_id', 'sitter_id').all?{ |key, value| value.present? } && c.photo.attached? }
@@ -71,7 +86,7 @@ class CustomersController < ApplicationController
     end
 
     def correct_customer
-      unless current_customer?(@customer)
+      unless current_customer == @customer
         flash.alert = t :no_access, scope: [:activerecord, :flashes], model: t(:customer, scope: [:activerecord, :models]), action: t(params[:action].to_sym, scope: [:actions])
         redirect_to customer_path(@customer)
       end
@@ -107,7 +122,7 @@ class CustomersController < ApplicationController
           :id,
           :_destroy,
           :starts_at,
-          :end_at
+          :ends_at
         ]
       )
     end

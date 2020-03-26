@@ -11,7 +11,14 @@ class SittersController < ApplicationController
       all_active_sitters = sitters_fitting_to_customer
       @matching_availabilities = only_overlapping_availabilities(all_active_sitters)
       @sitters = []
-      @matching_availabilities.each{|ca_id, s_id_sa_ids| s_id_sa_ids.each{|s_id, sa_id| @sitters<<Sitter.find(s_id) unless @sitters.include?(Sitter.find(s_id))}}
+      @matching_availabilities.each do |ca_id, s_id_sa_ids|
+        s_id_sa_ids.each do |s_id, sa_id|
+          sitter = Sitter.find(s_id)
+          if !@sitters.include?(sitter) && sitter.districts.include?(current_customer.district)
+            @sitters<<Sitter.find(s_id)
+          end
+        end
+      end
     elsif current_admin
       @sitters = sitters_all_attributes_present
     end
@@ -54,13 +61,14 @@ class SittersController < ApplicationController
 
   # PATCH/PUT /sitters/1
   def update
-    if @sitter.update(sitter_params.except(:district_ids))
+    if @sitter.update(sitter_params.except(:sitter_availabilities_attributes, :district_ids)) && update_or_create_sitter_availabilities
       @sitter.district_possibilities.destroy_all
       sitter_params[:district_ids].each{|id| @sitter.district_possibilities.create(district_id: id)}
       redirect_to @sitter, notice: "Update erfolgreich."
     else
       @sitter.build_contact_info(sitter_params[:contact_info_attributes]) unless @sitter.contact_info.present?
       @districts = District.all
+      # build_sitter_availability_fields
       render :edit
     end
   end
@@ -72,116 +80,138 @@ class SittersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-  def matching_availabilities_to_sitter(sitter)
-    overlapping_availabilities = {}
-    current_customer.customer_availabilities.select{|ca| ca.booked != true}.each do |ca|
-      ca_range = ca.starts_at..ca.ends_at
-      overlapping_availabilities.store(ca.id, {})
-      overlapping_availabilities[ca.id].store(sitter.id, [])
-      sitter.sitter_availabilities.select{|sa| sa.booked != true}.each do |sa|
-        sa_range = sa.starts_at..sa.ends_at
-        if sa_range.cover?(ca_range) || sa_range == ca_range
-          overlapping_availabilities[ca.id][sitter.id] << sa.id
+
+    def build_sitter_availability_fields
+      sitter_params[:sitter_availabilities_attributes].values.each do |availability_hash|
+        if availability_hash[:_destroy] == 'false'
+          @sitter.sitter_availabilities.build(availability_hash.except(:_destroy))
         end
       end
     end
-    return overlapping_availabilities
-  end
 
-  def sitters_all_attributes_present
-    Sitter.select{ |s| s.contact_info.attributes.except('customer_id', 'sitter_id').all?{ |key, value| value.present? } && s.photo.attached? && s.sitter_availabilities.length.positive? }
-  end
-
-  def sitters_fitting_to_customer
-    sitters = sitters_all_attributes_present
-    sitters.select{|s| s.districts.include?(Customer.first.district)}
-  end
-
-  def only_overlapping_availabilities(sitters)
-    # sitters = sitters_all_attributes_present
-    overlapping_availabilities = {}
-    if current_admin
-      sitters.each do |s|
-        s.sitter_availabilities.each do |sa|
-          overlapping_availabilities.store(s, sa)
+    def update_or_create_sitter_availabilities
+      sitter_availabilities = sitter_params[:sitter_availabilities_attributes].values
+      sitter_availabilities.each do |availability_hash|
+        if availability_hash[:_destroy] == '1'
+          if availability_hash[:id].present?
+            SitterAvailability.find(availability_hash[:id]).delete
+          end
+        else
+          availability = @sitter.sitter_availabilities.where(id: availability_hash[:id]).first_or_initialize(availability_hash.except(:_destroy))
+          return false unless availability.save
         end
       end
-    else
-      # hash{customer_availability_id => { sitter_id => { sitter_availability_id } } }
+    end
+      # Use callbacks to share common setup or constraints between actions.
+    def matching_availabilities_to_sitter(sitter)
+      overlapping_availabilities = {}
       current_customer.customer_availabilities.select{|ca| ca.booked != true}.each do |ca|
         ca_range = ca.starts_at..ca.ends_at
         overlapping_availabilities.store(ca.id, {})
-        sitters.each do |sitter|
-          # overlapping_availabilities.store(sitter.id, {})
-          overlapping_availabilities[ca.id].store(sitter.id, [])
-          sitter.sitter_availabilities.select{|sa| sa.booked != true}.each do |sa|
-            sa_range = sa.starts_at..sa.ends_at
-            if sa_range.cover?(ca_range) || sa_range == ca_range
+        overlapping_availabilities[ca.id].store(sitter.id, [])
+        sitter.sitter_availabilities.select{|sa| sa.booked != true}.each do |sa|
+          sa_range = sa.starts_at..sa.ends_at
+          if sa_range.cover?(ca_range) || sa_range == ca_range
+            overlapping_availabilities[ca.id][sitter.id] << sa.id
+          end
+        end
+      end
+      return overlapping_availabilities
+    end
 
-              overlapping_availabilities[ca.id][sitter.id] << sa.id
+    def sitters_all_attributes_present
+      Sitter.select{ |s| s.contact_info.attributes.except('customer_id', 'sitter_id').all?{ |key, value| value.present? } && s.photo.attached? && s.sitter_availabilities.length.positive? }
+    end
+
+    def sitters_fitting_to_customer
+      sitters = sitters_all_attributes_present
+      sitters.select{|s| s.districts.include?(Customer.first.district)}
+    end
+
+    def only_overlapping_availabilities(sitters)
+      # sitters = sitters_all_attributes_present
+      overlapping_availabilities = {}
+      if current_admin
+        sitters.each do |s|
+          s.sitter_availabilities.each do |sa|
+            overlapping_availabilities.store(s, sa)
+          end
+        end
+      else
+        # hash{customer_availability_id => { sitter_id => { sitter_availability_id } } }
+        current_customer.customer_availabilities.select{|ca| ca.booked != true}.each do |ca|
+          ca_range = ca.starts_at..ca.ends_at
+          overlapping_availabilities.store(ca.id, {})
+          sitters.each do |sitter|
+            # overlapping_availabilities.store(sitter.id, {})
+            overlapping_availabilities[ca.id].store(sitter.id, [])
+            sitter.sitter_availabilities.select{|sa| sa.booked != true}.each do |sa|
+              sa_range = sa.starts_at..sa.ends_at
+              if sa_range.cover?(ca_range) || sa_range == ca_range
+
+                overlapping_availabilities[ca.id][sitter.id] << sa.id
+              end
             end
           end
         end
       end
+      return overlapping_availabilities
     end
-    return overlapping_availabilities
-  end
 
-  def set_sitter
-    @sitter = Sitter.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to(bookings_path, :notice => 'Babysitter existiert nicht.')
-  end
-
-  def correct_sitter
-    unless current_sitter == @sitter
-      flash.alert = t :no_access, scope: [:activerecord, :flashes], model: t(:sitter, scope: [:activerecord, :models]), action: t(params[:action].to_sym, scope: [:actions])
-      redirect_to sitter_path(@sitter)
+    def set_sitter
+      @sitter = Sitter.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to(bookings_path, :notice => 'Babysitter existiert nicht.')
     end
-  end
 
-  def only_customers!
-    unless current_admin || current_customer
-      flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])
-      redirect_to bookings_path
+    def correct_sitter
+      unless current_sitter == @sitter
+        flash.alert = t :no_access, scope: [:activerecord, :flashes], model: t(:sitter, scope: [:activerecord, :models]), action: t(params[:action].to_sym, scope: [:actions])
+        redirect_to sitter_path(@sitter)
+      end
     end
-  end
 
-  def only_customers_or_correct_sitter!
-    unless current_admin || current_customer || current_sitter == @sitter
-      flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])
-      redirect_to bookings_path
+    def only_customers!
+      unless current_admin || current_customer
+        flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])
+        redirect_to bookings_path
+      end
     end
-  end
 
-  # Only allow a trusted parameter "white list" through.
-  def sitter_params
-    params.require(:sitter).permit(
-      :age,
-      :contract_data_id,
-      :photo,
-      contact_info_attributes: [
-        :id,
-        :first_name,
-        :last_name,
-        :street,
-        :post_code,
-        :city,
-        :country,
-        :phone,
-        :bio,
-        :sign_in_count,
-        :last_sign_in,
-        :sitters_id
-      ],
-      district_ids: [],
-      sitter_availabilities_attributes: [
-        :id,
-        :_destroy,
-        :starts_at,
-        :ends_at
-      ]
-    )
-  end
+    def only_customers_or_correct_sitter!
+      unless current_admin || current_customer || current_sitter == @sitter
+        flash.alert = t :no_access, scope: [:activerecord, :flashes, :index], model: t(:sitter, scope: [:activerecord, :models])
+        redirect_to bookings_path
+      end
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def sitter_params
+      params.require(:sitter).permit(
+        :age,
+        :contract_data_id,
+        :photo,
+        contact_info_attributes: [
+          :id,
+          :first_name,
+          :last_name,
+          :street,
+          :post_code,
+          :city,
+          :country,
+          :phone,
+          :bio,
+          :sign_in_count,
+          :last_sign_in,
+          :sitters_id
+        ],
+        district_ids: [],
+        sitter_availabilities_attributes: [
+          :id,
+          :_destroy,
+          :starts_at,
+          :ends_at
+        ]
+      )
+    end
 end

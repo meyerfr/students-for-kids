@@ -3,6 +3,7 @@ import autocomplete from 'js-autocomplete';
 
 const autocompleteSearch = function() {
   const formSearch = document.getElementById('search-data');
+  console.log(formSearch)
 
   if (formSearch) {
     const data = JSON.parse(document.getElementById('search-data').dataset.data)

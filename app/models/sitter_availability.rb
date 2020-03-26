@@ -1,7 +1,6 @@
 class SitterAvailability < ApplicationRecord
   # add validation
-  validate :time_range
-  validate :no_overlapping_time_ranges, on: :create
+  validate :time_range, :no_overlapping_time_ranges
   belongs_to :sitter
 
   def time_range
@@ -11,10 +10,9 @@ class SitterAvailability < ApplicationRecord
 
   def no_overlapping_time_ranges
     new_sitter_range = starts_at..ends_at
-    Sitter.find(sitter_id).sitter_availabilities.each do |sitter_availability|
+    Sitter.find(sitter_id).sitter_availabilities.where.not(id: self.id).each do |sitter_availability|
       old_sitter_range = sitter_availability.starts_at..sitter_availability.ends_at
       if new_sitter_range.overlaps?(old_sitter_range)
-        print('should throw times_overlapping error')
         errors.add(:ends_at, :times_overlapping)
       end
     end
