@@ -1,8 +1,12 @@
 .show-wrapper{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 80px;
   position: relative;
+  h3{
+    margin: -50px 0 50px
+  }
   h2{
     text-align: center;
   }
@@ -55,6 +59,12 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          .invalid-feedback{
+            position: absolute;
+            width: max-content;
+            bottom: -22px;
+            right: -25px;
+          }
         }
       }
       .photo-label{
@@ -107,6 +117,16 @@
       .form-group{
         width: 70%;
       }
+      .district-choice{
+        display: flex;
+        flex-wrap: wrap;
+        span{
+          flex: 1 0 118px;
+          label{
+            margin-left: 5px;
+          }
+        }
+      }
     }
     .form-actions{
       text-align: center;
@@ -155,9 +175,14 @@
           display: flex;
           flex-direction: row-reverse;
           margin-bottom: 20px;
+          position: relative;
           .d-flex.flex-row.align-items-center{
             flex-direction: column !important;
             width: 100%;
+          }
+          .invalid-feedback{
+            position: absolute;
+            top: 70px;
           }
         }
         .kid-fields{
@@ -186,12 +211,12 @@
   }
 }
 
-.year{
-  display: none;
-}
-.month{
-  display: none;
-}
-.day{
-  display: none;
-}
+// .year{
+//   display: none;
+// }
+// .month{
+//   display: none;
+// }
+// .day{
+//   display: none;
+// }

@@ -1,5 +1,13 @@
 <%= render 'shared/random_hand_background' %>
 <div class="show-container">
+  <% if current_sitter == @sitter || current_admin %>
+    <%= link_to sitter_path(@sitter), method: :delete, data: { confirm: 'Bist du dir sicher?'}, class: 'edit-button edit-info-on-hover' do %>
+      <i class="far fa-trash-alt"></i>
+      <span class="info">
+        Profil Löschen
+      </span>
+    <% end %>
+  <% end %>
   <%= simple_form_for(sitter) do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -16,8 +24,8 @@
         <% end %>
       </div>
       <%= f.simple_fields_for :contact_info do |ci| %>
-        <%= ci.input :first_name %>
-        <%= ci.input :last_name %>
+        <%= ci.input :first_name, autofocus: true, placeholder: 'Max' %>
+        <%= ci.input :last_name, placeholder: 'Mustermann' %>
         <%#= ci.input :phone, label_html: {class: 'info-label'} %>
         <%= ci.input :phone, wrapper_html: {class: 'info-label'} do %>
           <div class="info-on-hover">
@@ -26,7 +34,7 @@
             </div>
             <i class="fas fa-info"></i>
           </div>
-          <%= ci.input_field :phone, class: 'form-control' %>
+          <%= ci.input_field :phone, placeholder: '0172-1234567', class: 'form-control' %>
         <% end %>
      <!--    <div class="form-group">
           <div class="info-label">
@@ -40,7 +48,7 @@
           </div>
           <%#= ci.input_field :phone, label: false, class: 'form-control' %>
         </div> -->
-        <%= ci.input :bio, as: :text %>
+        <%= ci.input :bio, as: :text, placeholder: 'Mein Name ist Max Mustermann und ich studiere BWL im 4 Semester in Hamburg. Zurzeit bin ich bei meiner Familie in Düsseldorf und würde mich freuen Menschen in dieser Lage unterstützen zu können. Ich Babysitte seit meinem 13 Lebensjahr bei uns in der Nachbarschaft und arbeite als Hockey Co Trainer viel mit Kindern zusammen…' %>
         <%= ci.input :street, wrapper_html: {class: 'info-label'} do %>
           <div class="info-on-hover">
             <div class="info">
@@ -48,13 +56,31 @@
             </div>
             <i class="fas fa-info"></i>
           </div>
-          <%= ci.input_field :street, class: 'form-control' %>
+          <%= ci.input_field :street, placeholder: 'Königsallee 20', class: 'form-control' %>
         <% end %>
-        <%= ci.input :post_code %>
+        <%= ci.input :post_code, placeholder: '40212' %>
+        <%#= ci.input :city do %>
+        <!--   <div id= "search-data" class="form-search search-data" data-data="<%#= @districts.to_json %>">
+            <%#= ci.input_field :city, autocomplete: :off, class: "form-control search-input" %>
+          </div> -->
+        <%# end %>
         <%= ci.input :city, input_html: {value: 'Düsseldorf'} %>
         <%= ci.input :country, input_html: {value: 'Germany'}, wrapper_html: {class: 'd-none'} %>
       <% end %>
       <%= f.input :age %>
+      <%#= f.simple_fields_for :district_possibilities do |df|%>
+        <%# @districts.each do |district| %>
+          <%#= df.input :district_id, label: district.name, as: :boolean, checked_value: true, unchecked_value: false %>
+          <%#= df.input :district_id, label: false do %>
+            <%#= df.check_box :district_id %>
+            <%#= df.label :district_id, district.name %>
+          <%# end %>
+          <%#= df.check_box :district_id, label: district.name, value: district.id %>
+        <%# end %>
+      <%# end %>
+      <div class="district-choice form-group">
+        <%= f.collection_check_boxes(:district_ids, @districts, :id, :name) %>
+      </div>
       <%= f.input :sitter_availabilities, wrapper_html: {class: 'info-label'} do %>
         <div class="info-on-hover">
           <div class="info">

@@ -7,6 +7,20 @@ module ApplicationHelper
     current_admin || current_customer || current_sitter
   end
 
+
+  def current_sitter?(sitter)
+    current_sitter == sitter
+  end
+
+  def current_customer?(customer)
+    current_customer == customer
+  end
+
+  def current_admin?(admin)
+    current_admin == admin
+  end
+
+
   def current_user_show_path
     case current_user.class
     when Admin
@@ -20,11 +34,8 @@ module ApplicationHelper
   end
 
   def link_to_add_fields(name, f, association, **args)
-    # if f.object.send(association).select{|a| a.start.to_date == args[:day] if a.start.present?}.present?
-    #   new_object = f.object.send(association).select{|a| a.start.to_date == args[:day]}.first
-    # else
     if association != :kids
-      new_object = f.object.send(association).klass.new(start: "#{Date.tomorrow} 10", end: "#{Date.tomorrow} 18")
+      new_object = f.object.send(association).klass.new(starts_at: "#{Date.tomorrow} 10", ends_at: "#{Date.tomorrow} 18")
     else
       new_object = f.object.send(association).klass.new
     end

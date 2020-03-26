@@ -1,9 +1,17 @@
 
 <div class="show-wrapper">
+  <% if current_sitter?(@sitter) %>
+    <h3>Mein Profil</h3>
+  <% end %>
   <%= render '/shared/random_hand_background' %>
   <div class="show-container">
-    <% if current_user == @sitter || current_admin || current_user.sitters.select{|s| s.id == @sitter.id}.present? %>
-      <%= link_to '<i class="far fa-edit"></i>'.html_safe, edit_sitter_path(@sitter), class: 'edit-button' %>
+    <% if current_sitter == @sitter || current_admin %>
+      <%= link_to edit_sitter_path(@sitter), class: 'edit-button edit-info-on-hover' do %>
+        <i class="far fa-edit"></i>
+        <span class="info">
+          Profil bearbeiten
+        </span>
+      <% end %>
     <% end %>
     <div class="form-inputs show">
       <div class="profile-photo-container">
@@ -14,20 +22,20 @@
         <% end %>
       </div>
       <div class="form-group">
-        <%= label_tag 'Name:' %>
+        <%= label_tag t(:name) %>
         <%= @contact_info.full_name %>
       </div>
       <div class="form-group">
-        <%= label_tag 'Alter:' %>
+        <%= label_tag t(:age) %>
         <%= @sitter.age %>
       </div>
       <div class="form-group d-flex flex-column">
-        <%= label_tag 'Bio:' %>
+        <%= label_tag t(:bio) %>
         <%= @contact_info.bio %>
       </div>
-      <% if current_user == @sitter || current_admin || current_user.sitters.select{|s| s.id == @sitter.id}.present? %>
+      <% if current_sitter == @sitter || current_admin || current_customer && current_customer.sitters.select{|s| s.id == @sitter.id}.present? %>
         <div class="form-group info-label show">
-          <%= label_tag 'Telefonnummer' %>
+          <%= label_tag t(:phone) %>
           <div class="info-on-hover">
             <div class="info">
               <span>Wird nur dir und deinen Kunden gezeigt.</span>
@@ -40,7 +48,7 @@
       <% end %>
       <% if current_user == @sitter || current_admin %>
         <div class="form-group address info-label show">
-          <%= label_tag 'Adresse' %>
+          <%= label_tag t(:address) %>
           <div class="info-on-hover">
             <div class="info">
               <span>Wird nur dir gezeigt.</span>
@@ -54,17 +62,25 @@
         </div>
       <% end %>
       <div class="form-group">
-        <%= label_tag :sitter_availabilities, "Verfügbarkeiten:" %>
-        <% @availabilities.each do |availability| %>
-          <div class="availability">
-            <span><%= l(availability.start, format: :short) %> - <%= l(availability.end, format: :only_time) %></span>
-            <% unless current_user == @sitter %>
-              <%= link_to 'Book', '#', class: 'sfk-button' %>
+        <% if @availabilities.present? %>
+          <%= label_tag t(:sitter_availabilities) %>
+          <% @availabilities.each do |ca_id, sitter_availabilities| %>
+            <% sitter_availabilities.each do |sa| %>
+              <div class="availability">
+                <span><%= l(sa.starts_at, format: :short) %> - <%= l(sa.ends_at, format: :only_time) %></span>
+                  <%= link_to 'Book', bookings_path(booking: {customer_id: current_customer.id, sitter_id: @sitter.id, start: sa.starts_at, end: sa.ends_at, sa_id: sa.id, ca_id: ca_id}), class: 'sfk-button', method: :post %>
+              </div>
             <% end %>
-          </div>
+          <% end %>
+        <% elsif @sitter_availabilities.present? %>
+          <%= label_tag t(:sitter_availabilities) %>
+          <% @sitter_availabilities.each do |sa| %>
+            <div class="availability">
+              <span><%= l(sa.starts_at, format: :short) %> - <%= l(sa.ends_at, format: :only_time) %></span>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
-<%#= link_to 'Back', sitters_path %>

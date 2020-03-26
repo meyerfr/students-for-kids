@@ -3,9 +3,9 @@
   <%= f.input_field :_destroy, as: :hidden %>
   <%= link_to '<i class="far fa-trash-alt"></i>'.html_safe, '#', class: 'remove_record' %>
   <%#= f.datetime_select :start, {date_separator: "-"} %>
-  <%= f.input :end, label: false, wrapper: false do %>
-    <div class="date inline"><%= f.datetime_select :start, {:order => [:day, :month, :year], datetime_separator: "</div><div class='time inline'>", time_separator: ':'}, {class: 'form-control'}%>
+  <%= f.input :ends_at, label: false, wrapper: false do %>
+    <div class="date inline"><%= f.datetime_select :starts_at, {start_year: Date.today.year, :end_year => Date.today.year, :order => [:day, :month, :year], datetime_separator: "</div><div class='time inline'>", time_separator: ':'}, {class: 'form-control'}%>
       –
-      <%= f.datetime_select :end, {:order => [:day, :month, :year], datetime_separator: '', time_separator: ':', with_css_classes: true}, {class: 'form-control'} %></div>
+      <%= f.datetime_select :ends_at, {discard_year: true, discard_month: true, discard_day: true, :order => [:day, :month, :year], datetime_separator: '', time_separator: ':', with_css_classes: true}, {class: 'form-control'} %></div>
   <% end %>
 </div>

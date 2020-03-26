@@ -9,6 +9,7 @@ gem 'rails', '5.2.3'
 gem 'redis'
 gem 'devise'
 gem 'cloudinary', '~> 1.12.0'
+gem 'postmark-rails'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.12.0'
@@ -19,6 +20,7 @@ gem 'webpacker'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
+  gem 'letter_opener'
 end
 
 group :development, :test do

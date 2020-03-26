@@ -1,0 +1,16 @@
+<p>Liebe <%= @contact_info_customer.first_name %></p>
+<p><strong>DU HAST DEN OPTIMALEN BABYSITTER FÜR DEINE FAMILIE GEFUNDEN? SUPER!</strong></p>
+<p>Deinen Babysitter (<%= @contact_info_sitter.first_name %>) triffst du am <strong><%= l(@booking.starts_at, format: :long) %> in der <%= @contact_info_customer.street %></strong>.</p>
+<p>Du kannst Dich ab jetzt mit <%= @contact_info_sitter.first_name %> telefonisch in Verbindung setzen unter der Nummer <%= @contact_info_sitter.phone %>.
+</p>
+<p>Solltest Du irgendwelche Anmerkungen bezüglich Deines Babysitters machen wollen, kannst Du dich jederzeit unter <%= mail_to 'hannah.meyer@students-for-kids.de' %> melden.</p>
+<p>Um den nächsten Babysitter Einsatz zu buchen, gehe einfach auf <%= link_to 'students-for-kids.de', 'http://www.students-for-kids.de' %> und suche Deine perfekte Unterstützung für den Alltag.</p>
+<div style='display: flex; flex-direction: column;'>
+  <span>BLEIB GESUND :)</span>
+  <span>Mit freundlichen Grüßen</span>
+</div>
+<p>Dein Stundents for Kids Team</p>
+<div style="display: flex; width: 165px; flex-direction: column;">
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: scaleX(-1) rotate(20deg);' %>
+  <%= image_tag attachments['hand-print-green.png'].url, style: 'width: 80px; transform: rotate(20deg); align-self: flex-end' %>
+</div>

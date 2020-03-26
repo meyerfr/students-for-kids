@@ -3,11 +3,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: $light-gray;
   .header{
     color: $red;
     .quote{
       color: black;
     }
+  }
+  .header.top{
+    padding-left: 20px;
   }
   .section{
     padding: 50px;
@@ -20,6 +24,7 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      margin-bottom: 30px;
       .part{
         display: flex;
         width: 105px;
@@ -45,8 +50,8 @@
         width: 35%;
       }
     }
-    .section-part:first-child{
-      margin-bottom: 20px;
+    .section-part:last-child{
+      margin-bottom: 0;
     }
     .section-part.about-us{
       align-items: start;
@@ -70,8 +75,13 @@
       width: 300px;
     }
   }
+  .section.drawing{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
   .section:nth-child(2n){
-    background: $light-gray;
+    background: white;
   }
   .section.top{
     width: 70%;
@@ -86,9 +96,6 @@
       text-align: center;
       margin-bottom: 30px;
     }
-    // .section{
-    //   padding: 50px;
-    // }
   }
   .background{
     background: white;
@@ -104,12 +111,18 @@
       color: #efefef;
       font-size: 25px;
     }
+    .fa-quote-left.darker{
+      color: #eaeaea;
+    }
     .fa-quote-right{
       position: absolute;
       left: -3px;
       top: 25px;
       color: #efefef;
       font-size: 25px;
+    }
+    .fa-quote-right.darker{
+      color: #eaeaea;
     }
   }
   .hands-container{

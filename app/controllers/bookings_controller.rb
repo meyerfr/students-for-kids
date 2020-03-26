@@ -3,7 +3,13 @@ class BookingsController < ApplicationController
 
   # GET /bookings
   def index
-    @bookings = Booking.all
+    if current_customer
+      @bookings = current_customer.bookings
+    elsif current_sitter
+      @bookings = current_sitter.bookings
+    elsif current_admin
+      @bookings = Booking.all
+    end
   end
 
   # GET /bookings/1
@@ -21,10 +27,11 @@ class BookingsController < ApplicationController
 
   # POST /bookings
   def create
-    @booking = Booking.new(booking_params)
-
+    @booking = Booking.new(booking_params.except(:sa_id, :ca_id))
     if @booking.save
-      redirect_to @booking, notice: 'Booking was successfully created.'
+      SitterAvailability.find(booking_params[:sa_id]).update(booked: true)
+      CustomerAvailability.find(booking_params[:ca_id]).update(booked: true)
+      redirect_to bookings_path, notice: 'Booking was successfully created.'
     else
       render :new
     end
@@ -53,6 +60,6 @@ class BookingsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def booking_params
-      params.require(:booking).permit(:customer_id, :sitter_id, :start, :end)
+      params.require(:booking).permit(:customer_id, :sitter_id, :starts_at, :ends_at, :sa_id, :ca_id)
     end
 end
