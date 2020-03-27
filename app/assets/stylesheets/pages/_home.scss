@@ -6,11 +6,25 @@
   i{margin-right: 20px;}
 }
 
+// @media (max-width: 768px){
+//   h1{
+//     font-size: 1.5rem;
+//   }
+//   // .home-wrapper{
+//   //   .section{
+//   //     padding: 40px;
+//   //   }
+//   // }
+// }
+
 .home-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
   background: $light-gray;
+  @media (max-width: 768px) {
+    h1{font-size: 1.5rem;}
+  }
   .header{
     color: $red;
     .quote{
@@ -21,19 +35,28 @@
     padding-left: 20px;
   }
   .section{
-    padding: 50px;
+    @media (min-width: 768px){
+      padding: 50px;
+    }
+    padding: 30px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
     .section-part{
-      width: 80%;
+      @media (min-width: 768px) {
+        width: 80%;
+      }
+      width: 95%;
       display: flex;
       justify-content: space-around;
       align-items: center;
       margin-bottom: 30px;
       .part{
-        display: flex;
+        @media (min-width: 768px) {
+          display: flex;
+        }
+        display: none;
         width: 105px;
         flex-direction: column;
         img{
@@ -54,18 +77,30 @@
         flex-direction: column-reverse;
       }
       .part.set-width{
-        width: 35%;
+        display: flex;
+        @media (min-width: 768px) {
+          width: 35%;
+        }
+        width: 95%;
       }
     }
     .section-part:last-child{
       margin-bottom: 0;
     }
     .section-part.about-us{
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+      }
       align-items: start;
       .about-me{
         display: flex;
         flex-direction: column;
         align-items: center;
+        @media (max-width: 768px) {
+          width: 95%;
+          margin-top: 25px;
+        }
         width: 30%;
         text-align: center;
         img{
@@ -86,12 +121,23 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    @media(max-width: 768px){
+      img{
+        display: none;
+      }
+      .text{
+        width: 95%;
+      }
+    }
   }
   .section:nth-child(2n){
     background: white;
   }
   .section.top{
-    width: 70%;
+    @media (min-width: 768px) {
+      width: 70%;
+    }
+    width: 100%;
     align-items: center;
   }
   .section.center{
@@ -159,3 +205,16 @@
     }
   }
 }
+
+// @media (max-width: 768px){
+//   .home-wrapper.section {
+//     padding: 40px;
+//     flex: 1 0 229px;
+//     .section-part{
+//       width: 100px;
+//       .part.set-width{
+//         width: 60%;
+//       }
+//     }
+//   }
+// }

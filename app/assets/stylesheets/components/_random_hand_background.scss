@@ -1,4 +1,7 @@
 .random-hand-backgroud-wrapper{
+  @media (max-width: 768px) {
+    display: none;
+  }
   height: 100%;
   width: 100%;
   position: absolute;

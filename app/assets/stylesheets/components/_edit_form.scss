@@ -11,6 +11,10 @@
     text-align: center;
   }
   .show-container{
+    @media (max-width: 768px) {
+      padding: 30px 0;
+      width: 95%;
+    }
     border: 1px solid #ced4da;
     border-radius: 5px;
     padding: 30px 50px;
@@ -134,6 +138,10 @@
     }
     .availabilities{
       .availability-hands{
+        @media (max-width: 768px) {
+          flex-direction: column-reverse;
+          align-items: center;
+        }
         display: flex;
         width: 100%;
         .availability-hand-container{
@@ -203,6 +211,9 @@
   }
 }
 .show-container.devise{
+  @media (max-width: 768px) {
+    width: 90%;
+  }
   width: 45%;
   .options{
     display: flex;
