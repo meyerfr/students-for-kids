@@ -82,7 +82,7 @@
             <% sitter_availabilities.each do |sa| %>
               <div class="availability">
                 <span><%= l(sa.starts_at, format: :short) %> - <%= l(sa.ends_at, format: :only_time) %></span>
-                  <%= link_to 'Book', bookings_path(booking: {customer_id: current_customer.id, sitter_id: @sitter.id, start: sa.starts_at, end: sa.ends_at, sa_id: sa.id, ca_id: ca_id}), class: 'sfk-button', method: :post %>
+                  <%= link_to 'Book', bookings_path(booking: {customer_id: current_customer.id, sitter_id: @sitter.id, starts_at: sa.starts_at, ends_at: sa.ends_at, sa_id: sa.id, ca_id: ca_id}), class: 'sfk-button', method: :post %>
               </div>
             <% end %>
           <% end %>
