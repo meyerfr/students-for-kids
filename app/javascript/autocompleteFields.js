@@ -3,7 +3,6 @@ import autocomplete from 'js-autocomplete';
 
 const autocompleteSearch = function() {
   const formSearch = document.getElementById('search-data');
-  console.log(formSearch)
 
   if (formSearch) {
     const data = JSON.parse(document.getElementById('search-data').dataset.data)
@@ -19,6 +18,7 @@ const autocompleteSearch = function() {
           for (let i = 0; i < choices.length; i++)
               if (~choices[i].toLowerCase().indexOf(term)) matches.push(choices[i]);
           suggest(matches);
+          console.log(matches);
         },
       });
     };
