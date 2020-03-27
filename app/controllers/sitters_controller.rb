@@ -7,7 +7,9 @@ class SittersController < ApplicationController
 
   # GET /sitters
   def index
-    if current_customer
+    if current_admin
+      @sitters = sitters_all_attributes_present
+    elsif current_customer
       all_active_sitters = sitters_fitting_to_customer
       @matching_availabilities = only_overlapping_availabilities(all_active_sitters)
       @sitters = []
@@ -19,8 +21,6 @@ class SittersController < ApplicationController
           end
         end
       end
-    elsif current_admin
-      @sitters = sitters_all_attributes_present
     end
   end
 
