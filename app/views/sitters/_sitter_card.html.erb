@@ -21,7 +21,7 @@
             <% end %>
           <% end %>
         <% end %>
-      <% elsif current_admin %>
+      <% else %>
         <span class="underline"><%= contact_info.first_name %> kann helfen am:</span>
         <% sitter.sitter_availabilities.each do |sa| %>
           <div class="sitter-card-availability">

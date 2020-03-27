@@ -15,7 +15,11 @@
         <div class="search-results">
           <div class="index-wrapper">
             <% @sitters.each do |sitter| %>
-              <%= render 'sitter_card', sitter: sitter, matching_availabilities: @matching_availabilities , contact_info: sitter.contact_info %>
+              <% if current_customer %>
+                <%= render 'sitter_card', sitter: sitter, matching_availabilities: @matching_availabilities, contact_info: sitter.contact_info %>
+              <% else %>
+                <%= render 'sitter_card', sitter: sitter, contact_info: sitter.contact_info %>
+              <% end %>
             <% end %>
           </div>
         </div>

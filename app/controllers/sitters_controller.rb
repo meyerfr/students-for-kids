@@ -126,7 +126,7 @@ class SittersController < ApplicationController
     end
 
     def sitters_all_attributes_present
-      Sitter.select{ |s| s.contact_info.attributes.except('customer_id', 'sitter_id').all?{ |key, value| value.present? } && s.photo.attached? && s.sitter_availabilities.length.positive? }
+      Sitter.select{ |s| s.contact_info.attributes.except('customer_id', 'sitter_id').all?{ |key, value| value.present? } && s.photo.attached? }
     end
 
     def sitters_fitting_to_customer
