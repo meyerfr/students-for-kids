@@ -78,13 +78,16 @@
           <%#= df.check_box :district_id, label: district.name, value: district.id %>
         <%# end %>
       <%# end %>
-      <div class="district-choice form-group">
-        <%= f.collection_check_boxes(:district_ids, @districts, :id, :name) %>
+      <div class="form-group">
+        <%= f.label :district_possibilities, 'Wo kannst du Babysitten?' %>
+        <div class="district-choice">
+          <%= f.collection_check_boxes(:district_ids, @districts, :id, :name) %>
+        </div>
       </div>
       <%= f.input :sitter_availabilities, wrapper_html: {class: 'info-label'} do %>
         <div class="info-on-hover">
           <div class="info">
-            <span>Wird nur deinen Kunden gezeigt.</span>
+            <span>Klicke die Hand.</span>
           </div>
           <i class="fas fa-info"></i>
         </div>

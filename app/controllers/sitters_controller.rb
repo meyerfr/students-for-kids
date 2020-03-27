@@ -68,6 +68,8 @@ class SittersController < ApplicationController
     else
       @sitter.build_contact_info(sitter_params[:contact_info_attributes]) unless @sitter.contact_info.present?
       @districts = District.all
+      @sitter.sitter_availabilities.build(starts_at: "#{Date.tomorrow} 10", ends_at: "#{Date.tomorrow} 16") unless sitter_params[:sitter_availabilities_attributes]
+      # @sitter.districts.build(sitter_params[:district_ids]) unless @sitter.districts.present?
       # build_sitter_availability_fields
       render :edit
     end
@@ -90,6 +92,7 @@ class SittersController < ApplicationController
     end
 
     def update_or_create_sitter_availabilities
+     if sitter_params[:sitter_availabilities_attributes].present?
       sitter_availabilities = sitter_params[:sitter_availabilities_attributes].values
       sitter_availabilities.each do |availability_hash|
         if availability_hash[:_destroy] == '1'
@@ -101,6 +104,9 @@ class SittersController < ApplicationController
           return false unless availability.save
         end
       end
+    else
+      true
+     end
     end
       # Use callbacks to share common setup or constraints between actions.
     def matching_availabilities_to_sitter(sitter)

@@ -4,9 +4,14 @@ class ApplicationController < ActionController::Base
 
   def check_contact_info(resource)
     unless current_admin
-      if resource.contact_info.attributes.except('customer_id', 'sitter_id').any?{|key, value| !value.present? }
-        flash[:notice] = t(:update_profile_info)
-        redirect_to public_send("edit_#{resource.class.to_s.downcase}_path", resource)
+      if resource
+        if resource.contact_info.attributes.except('customer_id', 'sitter_id').any?{|key, value| !value.present? }
+          flash[:notice] = t(:update_profile_info)
+          redirect_to public_send("edit_#{resource.class.to_s.downcase}_path", resource)
+        end
+      else
+        flash[:notice] = 'Du musst dich erst anmelden oder registrieren!'
+        redirect_to root_path
       end
     end
   end

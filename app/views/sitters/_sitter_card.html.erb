@@ -16,7 +16,7 @@
               <div class="sitter-card-availability">
                 <% customer_availability = CustomerAvailability.find(ca_id) %>
                 <span><%= l(customer_availability.starts_at, format: :only_date) %></span>
-                <span><%= l(customer_availability.start_at, format: :only_time) %> - <%= l(customer_availability.starts_at, format: :only_time) %></span>
+                <span><%= l(customer_availability.starts_at, format: :only_time) %> - <%= l(customer_availability.starts_at, format: :only_time) %></span>
               </div>
             <% end %>
           <% end %>

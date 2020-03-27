@@ -1,4 +1,11 @@
-
+<% if current_sitter %>
+  <div class="no-instances-info">
+    <i class="fas fa-info"></i>
+    <span>
+      Du findest alle deine Buchungen unter 'meine Buchungen'. Außerdem informieren wir dich immer per Mail wenn jemand Hilfe benötigt. Leider landen unsere Mails hin und wieder auch im Span-Ordner, also halt die Augen auf.
+    </span>
+</div>
+<% end %>
 <div class="show-wrapper">
   <% if current_sitter?(@sitter) %>
     <h3>Mein Profil</h3>

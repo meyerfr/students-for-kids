@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
+  get 'corona', to: 'pages#corona', as: 'corona'
   devise_for :customers, controllers: {
     sessions: 'customers/sessions',
     registrations: 'customers/registrations'

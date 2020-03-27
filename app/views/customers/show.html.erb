@@ -60,7 +60,7 @@
         </div>
         <div class="form-group info-label show">
           <% if current_user == @customer %>
-            <%= label_tag t(:kids) %>
+            <%= label_tag t(:kids) %><br>
             <div class="info-on-hover">
               <div class="info">
                 <span>Wird nur dir und deinen Babysittern gezeigt.</span>
@@ -81,6 +81,14 @@
           <%= @customer.kids.count == 1 ? "Kind" : 'Kinder' %>
         </div>
       <% end %>
+      <div class="form-group">
+        <%= label_tag t(:customer_availabilities) %>
+        <% @customer_availabilities.each do |ca| %>
+          <div class="availability">
+            <span><%= l(ca.starts_at, format: :short) %> - <%= l(ca.ends_at, format: :only_time) %></span>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
