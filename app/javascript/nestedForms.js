@@ -31,7 +31,6 @@ const addFields = (event) => {
   if (allAvailabilityFields.length > 0) {
     var insertedElement = allAvailabilityFields[allAvailabilityFields.length - 1];
     if (insertedElement) {
-      console.log(insertedElement);
       var startDateContainer = insertedElement.querySelector('.date');
       var day = startDateContainer.children[0].value;
       var month = startDateContainer.children[1].value;

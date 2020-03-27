@@ -14,7 +14,6 @@ function closePopup() {
 function openPopup() {
   if (openPopupButton) {
     openPopupButton.addEventListener('click', function(e){
-      console.log(popupContainer);
       popupContainer.classList.remove('d-none');
     })
   }

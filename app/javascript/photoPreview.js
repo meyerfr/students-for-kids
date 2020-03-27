@@ -8,8 +8,6 @@ const insertPictures = (event) => {
         var reader = new FileReader();
         var target = event.target;
         reader.onload = function (e) {
-          console.log(e)
-          console.log(target)
           var profilePhotoContainer = target.parentElement.parentElement
           if (profilePhotoContainer.querySelector('img')) {
             profilePhotoContainer.querySelector('img').remove();
