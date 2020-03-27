@@ -46,6 +46,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to root_path unless admin_signed_in? || sitter_signed_in? || customer_signed_in?
+    redirect_to root_path, notice: 'Du musst dich erst anmelden oder registrieren.' unless admin_signed_in? || sitter_signed_in? || customer_signed_in?
   end
 end

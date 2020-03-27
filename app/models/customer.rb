@@ -3,7 +3,7 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   after_create :send_welcome_email
   has_one_attached :photo
-  # validate :validate_photo, on: :update
+  validate :validate_photo, on: :update
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
   has_one :contact_info
