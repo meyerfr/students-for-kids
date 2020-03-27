@@ -12,7 +12,7 @@
         <span class="underline"><%= contact_info.first_name %> kann dir helfen am:</span>
         <% matching_availabilities.each do |ca_id, s_id_sa_ids| %>
           <% s_id_sa_ids.each do |s_id, sa_id| %>
-            <% if s_id == sitter.id %>
+            <% if s_id == sitter.id && sa_id.present? %>
               <div class="sitter-card-availability">
                 <% customer_availability = CustomerAvailability.find(ca_id) %>
                 <span><%= l(customer_availability.starts_at, format: :only_date) %></span>
