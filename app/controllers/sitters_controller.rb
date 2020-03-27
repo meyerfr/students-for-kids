@@ -64,7 +64,7 @@ class SittersController < ApplicationController
     if @sitter.update(sitter_params.except(:sitter_availabilities_attributes, :district_ids)) && update_or_create_sitter_availabilities
       @sitter.district_possibilities.destroy_all
       sitter_params[:district_ids].each{|id| @sitter.district_possibilities.create(district_id: id)}
-      redirect_to @sitter, notice: "Update erfolgreich."
+      redirect_to sitter_path(@sitter), notice: "Update erfolgreich."
     else
       @sitter.build_contact_info(sitter_params[:contact_info_attributes]) unless @sitter.contact_info.present?
       @districts = District.all
