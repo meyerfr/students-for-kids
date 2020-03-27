@@ -53,7 +53,7 @@ class SittersController < ApplicationController
   def create
     @sitter = Sitter.new(sitter_params)
     if @sitter.save
-      redirect_to @sitter, notice: 'Babysitter erfolgreich erstellt.'
+      redirect_to sitter_path(@sitter), notice: 'Babysitter erfolgreich erstellt.'
     else
       render :new
     end
@@ -78,7 +78,7 @@ class SittersController < ApplicationController
   # DELETE /sitters/1
   def destroy
     @sitter.destroy
-    redirect_to sitters_url, notice: 'Babysitter erfolgreich gelöscht.'
+    redirect_to root_path, notice: 'Babysitter erfolgreich gelöscht.'
   end
 
   private

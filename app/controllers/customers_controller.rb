@@ -33,7 +33,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      redirect_to @customer, notice: 'Customer was successfully created.'
+      redirect_to customer_path(@customer), notice: 'Customer was successfully created.'
     else
       render :new
     end
@@ -63,7 +63,7 @@ class CustomersController < ApplicationController
   # DELETE /customers/1
   def destroy
     @customer.destroy
-    redirect_to customers_url, notice: 'Customer was successfully destroyed.'
+    redirect_to root_path, notice: 'Customer was successfully destroyed.'
   end
 
   private
