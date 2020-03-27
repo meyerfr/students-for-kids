@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     elsif resource.class == Sitter
       resource.contact_info.phone.present? ? sitter_path(resource) : edit_sitter_path(resource)
     elsif resource.class == Customer
-      resource.contact_info.phone.present? ? customer_path(resource) : edit_customer_path(resource)
+      resource.contact_info.phone.present? ? sitters_path : edit_customer_path(resource)
     end
   end
 

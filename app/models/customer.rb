@@ -6,12 +6,12 @@ class Customer < ApplicationRecord
   validate :validate_photo, on: :update
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
-  has_one :contact_info
-  has_many :customer_availabilities
+  has_one :contact_info, dependent: :destroy
+  has_many :customer_availabilities, dependent: :destroy
   belongs_to :district, optional: true
   accepts_nested_attributes_for :district
-  has_many :kids
-  has_many :bookings
+  has_many :kids, dependent: :destroy
+  has_many :bookings, dependent: :destroy
   has_many :sitters, through: :bookings
   accepts_nested_attributes_for :contact_info, allow_destroy: true#, reject_if: proc { |att| att['first_name'].blank? }
   validates_associated :contact_info

@@ -70,8 +70,11 @@
         <div class="form-group info-label show">
           <%= label_tag t(:sitter_districts) %>
           <br>
-          <% @sitter.districts.each do |district| %>
-            <%= district.name %>,
+          <% @sitter.districts.each_with_index do |district, idx| %>
+            <%= district.name %>
+            <% unless idx == @sitter.districts.length - 1 %>
+              ,
+            <% end %>
           <% end %>
         </div>
       <% end %>

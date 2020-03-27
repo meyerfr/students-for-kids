@@ -8,9 +8,9 @@ class Sitter < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
   has_one :contact_info, dependent: :destroy
-  has_many :sitter_availabilities
+  has_many :sitter_availabilities, dependent: :destroy
   has_many :bookings, dependent: :destroy
-  has_many :district_possibilities
+  has_many :district_possibilities, dependent: :destroy
   has_many :districts, through: :district_possibilities
   accepts_nested_attributes_for :district_possibilities
   has_many :customers, through: :bookings
