@@ -26,7 +26,7 @@
         <% sitter.sitter_availabilities.each do |sa| %>
           <div class="sitter-card-availability">
             <span><%= l(sa.starts_at, format: :only_date) %></span>
-            <span><%= l(sa.starts_at, format: :only_time) %> - <%= l(sa.starts_at, format: :only_time) %></span>
+            <span><%= l(sa.starts_at, format: :only_time) %> - <%= l(sa.ends_at, format: :only_time) %></span>
           </div>
         <% end %>
       <% end %>

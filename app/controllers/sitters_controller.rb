@@ -16,7 +16,7 @@ class SittersController < ApplicationController
       @matching_availabilities.each do |ca_id, s_id_sa_ids|
         s_id_sa_ids.each do |s_id, sa_id|
           sitter = Sitter.find(s_id)
-          if !@sitters.include?(sitter) && sitter.districts.include?(current_customer.district)
+          if !@sitters.include?(sitter) && sitter.districts.include?(current_customer.district) && sitter.sitter_availabilities.select{|sa| sa.starts_at > Date.yesterday}.present?
             @sitters<<Sitter.find(s_id)
           end
         end
